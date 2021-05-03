@@ -1,0 +1,28 @@
+<mat-toolbar class="mod-header">
+    <button mat-icon-button (click)="onMenuClick()">
+        <mat-icon>
+            menu
+        </mat-icon>
+    </button>
+
+    <a class="logo-text-mark" [routerLink]="['/']">
+        <img class="mod-logo" src="/assets/US-OfficeOfManagementAndBudget-Seal.png" tabindex="-1" />
+        <div tabindex="-1" alt="Textmark" class="text-mark">{{ appName }}</div>
+    </a>
+
+    <span class="fill-remaining-space">
+        <ng-content></ng-content>
+    </span>
+
+    <div class="welcome-user">
+        <mod-user-display [showUser]="true" (selectOption)="onUserOptionSelect($event)"></mod-user-display>
+        <div *ngIf="config.showHelp">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Help Menu">
+                <mat-icon>help</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item *ngFor="let option of config.helpOptions" (click)="optionSelected(option)">{{ option }}</button>
+            </mat-menu>
+        </div>
+    </div>
+</mat-toolbar>

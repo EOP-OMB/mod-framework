@@ -1,0 +1,154 @@
+$sidenav-width: 250px;
+$sidenav-collapsed-width: 76px;
+$inactive-border: 5px solid #bbb;
+$active-border-color: #5b9acf;
+$menu-transition-time: .25s;
+
+#main-content:focus {
+    border: 1px solid $active-border-color;
+}
+
+.menu-close {
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+
+.menu-open {
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.mod-side-menu {
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    width: $sidenav-width;
+    transition: width $menu-transition-time;
+}
+
+.mod-side-menu.collapsed {
+    width: $sidenav-collapsed-width !important;
+    transition: width $menu-transition-time;
+}
+
+.mod-side-menu-container {
+    display: flex;
+    height: 100%;
+}
+
+.mod-side-menu-content {
+    transition: margin-left $menu-transition-time;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    align-items: stretch;
+    outline: none !important;
+}
+
+.mod-side-menu-content.collapsed {
+    margin-left: $sidenav-collapsed-width !important;
+    transition: margin-left $menu-transition-time;
+}
+
+h2 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+}
+
+.mat-subheader {
+    font-size: 14px;
+    line-height: 20px;
+    max-height: 56px;
+    color: #888;
+    //font-weight: bold;
+    padding: 12px 12px 12px 20px !important;
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+    border-left: $inactive-border;
+    margin-left: -5px;
+}
+
+.mat-subheader .mat-icon {
+    padding-left: 4px;
+    margin-right: 16px;
+}
+
+.mat-expansion-panel {
+    box-shadow: none;
+    margin: 0;
+}
+
+.mat-expansion-indicator {
+    line-height: 0 !important;
+}
+
+mat-expansion-panel-header[aria-disabled=true] {
+    color: initial;
+}
+
+.mat-expansion-panel-header {
+    height: 56px !important;
+    max-height: 56px !important;
+    border-left: $inactive-border;
+}
+
+.mat-expansion-panel-header-title {
+    max-height: 24px;
+}
+
+.mat-expansion-panel.active > .mat-expansion-panel-header {
+    border-color: $active-border-color;
+}
+
+.mat-expansion-panel-header-title > .mat-icon {
+    margin-right: 16px;
+}
+
+.mat-expansion-panel.mat-expanded {
+    background-color: #eee;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    padding: 0px 0px 0px 0px !important;
+}
+
+::ng-deep .mat-drawer-container {
+    display: flex;
+    align-items: stretch;
+}
+
+
+.mat-list-icon {
+    padding-right: 16px !important;
+    font-size: 22px !important;
+}
+
+.mat-list-item {
+    font-size: 15px !important;
+    border-left: $inactive-border;
+    margin-left: -5px;
+    height: 56px !important;
+    max-height: 56px !important;
+    line-height: 22.5px !important;
+    width: auto !important;
+}
+
+.mat-list-item:focus {
+    border: 1px solid $active-border-color;
+}
+
+.mat-list-item-content {
+    padding: 0px 24px !important;
+}
+
+.mat-list-item.active {
+    border-color: $active-border-color;
+    background-color: #d1d1d1;
+}
+
+.mat-list-base {
+    padding-top: 0px;
+}

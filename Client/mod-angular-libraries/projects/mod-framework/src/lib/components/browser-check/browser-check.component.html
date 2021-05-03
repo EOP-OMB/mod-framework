@@ -1,0 +1,29 @@
+<div *ngIf="browserFail" class="container-fluid browser-check-container">
+    <span class="fa fa-warning browser-check-icon"></span><span class="browser-check-header-text">&nbsp;&nbsp;You can't log in to this site.</span>
+    <div class="browser-check-text">
+        Possible reasons for this include:
+        <ul>
+            <li>
+                You can't reach the site {{loginSite}}.
+                <ul>
+                    <li>Please check your network connection.</li>
+                </ul>
+            </li>
+            <li>
+                Site {{loginSite}} does not allow cross-origin scripting (CORS) from your domain {{myDomain}}.
+                <ul>
+                    <li>Please contact the administrator of {{loginSite}} and request access for your site.</li>
+                </ul>
+            </li>
+            <li>
+                Your browser doesn't accept third-party cookies from domain {{loginDomain}}.
+                <ul>
+                    <li>In your browser settings, either allow all third-party cookies, or </li>
+                    <li>Disallow third-party cookies, but add {{loginDomain}} as an exception.</li>
+                </ul>
+            </li>
+        </ul>
+        <i>The actual error returned is "{{browserFail}}".<br /></i>
+        Please correct these problems and try again.
+    </div>
+</div>

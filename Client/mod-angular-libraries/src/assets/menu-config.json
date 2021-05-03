@@ -1,0 +1,52 @@
+{
+    "id": "app",
+    "title": "NAVIGATION",
+    "sections": [
+        {
+            "name": "",
+            "shortName": "",
+            "allowedRoles":  "",
+            "menuItems": [
+                {
+                    "text": "Home",
+                    "icon": "home",
+                    "route": "/"
+                },
+                {
+                    "text": "Org Chart",
+                    "icon": "device_hub",
+                    "route": "orgchart"
+                },
+                {
+                    "text": "Profile",
+                    "icon": "account_circle",
+                    "route": "profile"
+                },
+                {
+                    "text": "Staff Directory",
+                    "icon": "person",
+                    "route": "staff-directory"
+                },
+                {
+                    "text": "Search",
+                    "icon": "search",
+                    "route": "search",
+                    "allowedRoles": [ "Admin" ]
+                }
+            ]
+        },
+        {
+            "name": "ADMIN",
+            "shortName": "[A]",
+            "allowedRoles": [ "Admin" ],
+            "menuItems": [
+                {
+                    "text": "Demo Settings",
+                    "icon": "settings",
+                    "route": "settings"
+                }
+            ]
+        }
+    ]
+    
+}

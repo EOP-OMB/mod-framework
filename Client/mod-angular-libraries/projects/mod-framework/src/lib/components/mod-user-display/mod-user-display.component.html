@@ -1,0 +1,17 @@
+<div *ngIf="user">
+    Welcome 
+    <span style="padding-right: 5px;">{{ user.displayName }}</span>
+    <ng-container *ngIf="showUser;else showMenu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="mod-user-icon" aria-label="User Menu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+    </ng-container>
+    <ng-template #showMenu>
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="mat-icon-button" aria-label="User Menu">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+    </ng-template>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let option of config.userOptions" (click)="optionSelected(option)">{{ option }}</button>
+    </mat-menu>
+</div>

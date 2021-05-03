@@ -1,0 +1,32 @@
+<mat-sidenav-container class="mod-side-menu-container">
+    <mat-sidenav #sidenav mode="side" opened role="navigation" id="navigation-menu" [ngClass]="{'mod-side-menu' : true, 'collapsed' : (!expanded && opened)}">
+        <h1 mat-subheader>
+            {{ expanded ? config.title : "" }}
+            <mat-icon *ngIf="expanded" class="menu-close" (click)="expandMenu(!this.expanded)">
+                keyboard_arrow_left
+            </mat-icon>
+            <mat-icon *ngIf="!expanded" class="menu-open" (click)="expandMenu(!this.expanded)">
+                keyboard_arrow_right
+            </mat-icon>
+        </h1>
+
+        <div *ngFor="let section of viewableSections">
+            <h1 mat-subheader>
+                {{ expanded ? section.name : "" }}
+            </h1>
+            <mat-nav-list>
+                <mat-list-item *ngFor="let item of getViewableMenuItems(section)"
+                               [routerLink]="item.route"
+                               routerLinkActive="active"
+                               [routerLinkActiveOptions]="{exact: true}"
+                               (keyup.enter)="navigateTo(item.route)">
+                    <mat-icon mat-list-icon [matTooltip]="item.text">{{item.icon}}</mat-icon>
+                    {{ expanded ? item.text : ""}}
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content [ngClass]="{'mod-side-menu-content' : true, 'collapsed' : (!expanded && opened)}" role="main" #mainContent tabindex="0">
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>

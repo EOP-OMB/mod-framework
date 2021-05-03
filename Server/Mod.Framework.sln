@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework", "Mod.Framework\Mod.Framework.csproj", "{436C4D30-E4E0-4215-B6E3-93937D3ACF66}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.EfCore", "Mod.Framework.EfCore\Mod.Framework.EfCore.csproj", "{64A3DD91-D80A-4CD2-8501-34FEB16B20BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.Serilog", "Mod.Framework.Serilog\Mod.Framework.Serilog.csproj", "{C1E9F536-C74B-49CD-8F84-E6FADFDDC5A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.WebApi", "Mod.Framework.WebApi\Mod.Framework.WebApi.csproj", "{0EDEF9EC-2996-4DC5-AFCB-68BFFE332F94}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "mod-angular-libraries", "..\Client\mod-angular-libraries\", "{24A9F1F0-09BF-4425-A0B6-8F1DFC93981E}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54834"
+		Debug.AspNetCompiler.PhysicalPath = "..\Client\mod-angular-libraries\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54834\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54834"
+		Release.AspNetCompiler.PhysicalPath = "..\Client\mod-angular-libraries\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54834\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "54834"
+		SlnRelativePath = "..\Client\mod-angular-libraries\"
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.User", "Mod.Framework.User\Mod.Framework.User.csproj", "{D4AFBBC2-78EB-487E-9122-8ECA46241C79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.Notifications", "Mod.Framework.Notifications\Mod.Framework.Notifications.csproj", "{EE5A99D2-655A-40AB-943B-0A8E46F21817}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{436C4D30-E4E0-4215-B6E3-93937D3ACF66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436C4D30-E4E0-4215-B6E3-93937D3ACF66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436C4D30-E4E0-4215-B6E3-93937D3ACF66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436C4D30-E4E0-4215-B6E3-93937D3ACF66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64A3DD91-D80A-4CD2-8501-34FEB16B20BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64A3DD91-D80A-4CD2-8501-34FEB16B20BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64A3DD91-D80A-4CD2-8501-34FEB16B20BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64A3DD91-D80A-4CD2-8501-34FEB16B20BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1E9F536-C74B-49CD-8F84-E6FADFDDC5A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1E9F536-C74B-49CD-8F84-E6FADFDDC5A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1E9F536-C74B-49CD-8F84-E6FADFDDC5A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1E9F536-C74B-49CD-8F84-E6FADFDDC5A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EDEF9EC-2996-4DC5-AFCB-68BFFE332F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EDEF9EC-2996-4DC5-AFCB-68BFFE332F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EDEF9EC-2996-4DC5-AFCB-68BFFE332F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EDEF9EC-2996-4DC5-AFCB-68BFFE332F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24A9F1F0-09BF-4425-A0B6-8F1DFC93981E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A9F1F0-09BF-4425-A0B6-8F1DFC93981E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D7DF64-56F1-41E5-AF8D-024AB4AF85A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D7DF64-56F1-41E5-AF8D-024AB4AF85A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D7DF64-56F1-41E5-AF8D-024AB4AF85A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D7DF64-56F1-41E5-AF8D-024AB4AF85A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4AFBBC2-78EB-487E-9122-8ECA46241C79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4AFBBC2-78EB-487E-9122-8ECA46241C79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4AFBBC2-78EB-487E-9122-8ECA46241C79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4AFBBC2-78EB-487E-9122-8ECA46241C79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE5A99D2-655A-40AB-943B-0A8E46F21817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE5A99D2-655A-40AB-943B-0A8E46F21817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE5A99D2-655A-40AB-943B-0A8E46F21817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE5A99D2-655A-40AB-943B-0A8E46F21817}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D29DA76-E1D8-44A8-B434-BDE3FD0D088C}
+	EndGlobalSection
+EndGlobal

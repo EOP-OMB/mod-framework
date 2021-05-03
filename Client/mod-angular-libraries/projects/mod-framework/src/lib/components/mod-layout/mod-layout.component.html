@@ -1,0 +1,17 @@
+<mod-loading-overlay></mod-loading-overlay>
+<div class="mod-layout-container">
+    <div class="layout-header">
+        <!--<mod-welcome-banner>
+        </mod-welcome-banner>-->
+        <mod-header [appName]="appName" (menuClick)="onMenuClicked()" (userOptionSelect)="onUserOptionSelect($event)" (helpOptionSelect)="onHelpOptionSelect($event)">
+            <div *ngIf="config.showSearch" style="display: flex; justify-content: center;">
+                <input [(ngModel)]="searchText" matInput placeholder="Search" class="search-box" (keyup.enter)="onSearch()">
+            </div>
+        </mod-header>
+    </div>
+    <div class="layout-content">
+        <mod-side-menu [config]="menuConfig" #sidemenu>
+            <ng-content></ng-content>
+        </mod-side-menu>
+    </div>
+</div>

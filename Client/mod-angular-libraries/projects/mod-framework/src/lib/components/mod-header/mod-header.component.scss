@@ -1,0 +1,53 @@
+.mod-header {
+    justify-content: center;
+    background-color: #112e51;
+    display: flex;
+    color: #fff;
+ }
+
+a {
+    text-decoration: none;
+}
+
+.logo-text-mark {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.text-mark {
+    cursor: pointer;
+    margin-left: 12px;
+    font-size: 1.4em;
+    display: inline-block;
+    vertical-align: middle;
+    color: #d8b304;
+}
+
+.mod-logo {
+    margin-left: 4px;
+    height: 50px;
+}
+
+.fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+         Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+    align-items: center;
+    margin-left: 15px;
+    //padding: 15px;
+}
+
+.welcome-user {
+    font-size: .85em;
+    padding-top: 2px;
+    padding-right: 5px;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mat-button-base {
+    height: auto;
+    line-height: inherit;
+}

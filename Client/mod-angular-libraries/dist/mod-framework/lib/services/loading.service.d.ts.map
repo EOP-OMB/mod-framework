@@ -1,0 +1,1 @@
+{"version":3,"file":"loading.service.d.ts","sourceRoot":"","sources":["../../../../projects/mod-framework/src/lib/services/loading.service.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,eAAe,EAAE,MAAM,MAAM,CAAC;AACvC,OAAO,EAAE,kBAAkB,EAAE,MAAM,sCAAsC,CAAC;;AAG1E,qBAGa,cAAc;IAEhB,SAAS,2BAA8B;IACvC,YAAY,EAAE,MAAM,CAAO;gBAEH,MAAM,EAAE,kBAAkB;iCALhD,cAAc;qCAAd,cAAc;CAQ1B"}
