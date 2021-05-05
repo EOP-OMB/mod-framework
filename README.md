@@ -45,7 +45,7 @@ The remaining dependencies you can install by typing
 
 ## Adding the Auth Certificates
 
-Create a folder under your root app folder (same level as src) called Certificates and copy the localhost.login.omb.gov.key and localhost.login.omb.gov.pem files there.  
+Create a folder under your root app folder (same level as src) called Certificates and copy the localhost.key and localhost.pem files there.  
 
 ## Configuring angular.json
 You'll need to update your angular.json file.
