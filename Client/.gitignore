@@ -43,3 +43,6 @@ Thumbs.db
 # Added Manually:
 *.pem
 *.key
+
+# Documents
+*.pdf
