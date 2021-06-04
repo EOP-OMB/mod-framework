@@ -1,4 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import * as i0 from "@angular/core";
+import * as i1 from "../mod-user-display/mod-user-display.component";
 export class ModWelcomeBanner {
     constructor() {
         this.onLogin = new EventEmitter();
@@ -7,16 +9,26 @@ export class ModWelcomeBanner {
     ngOnInit() {
     }
 }
-ModWelcomeBanner.decorators = [
-    { type: Component, args: [{
+ModWelcomeBanner.ɵfac = function ModWelcomeBanner_Factory(t) { return new (t || ModWelcomeBanner)(); };
+ModWelcomeBanner.ɵcmp = i0.ɵɵdefineComponent({ type: ModWelcomeBanner, selectors: [["mod-welcome-banner"]], outputs: { onLogin: "onLogin", onLogout: "onLogout" }, decls: 4, vars: 0, consts: [["role", "banner", 1, "mod-header"], [1, "mod-welcome-banner"], [1, "welcome-user"]], template: function ModWelcomeBanner_Template(rf, ctx) { if (rf & 1) {
+        i0.ɵɵelementStart(0, "header", 0);
+        i0.ɵɵelementStart(1, "div", 1);
+        i0.ɵɵelementStart(2, "div", 2);
+        i0.ɵɵelement(3, "mod-user-display");
+        i0.ɵɵelementEnd();
+        i0.ɵɵelementEnd();
+        i0.ɵɵelementEnd();
+    } }, directives: [i1.ModUserDisplayComponent], styles: [".mod-header[_ngcontent-%COMP%]{display:flex;flex-direction:column}.mod-welcome-banner[_ngcontent-%COMP%]{padding-left:10px;padding-right:10px;background-color:#f0f0f0;padding-bottom:0;display:flex;font-family:Source Sans Pro Web,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}.welcome-user[_ngcontent-%COMP%]{font-weight:700;font-size:.85em;padding-top:2px;padding-right:5px;flex:1;display:flex;justify-content:flex-end}.loginout-button[_ngcontent-%COMP%]{vertical-align:middle;width:auto!important;display:inline!important}.loginout-text[_ngcontent-%COMP%]{align-items:center}"] });
+(function () { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(ModWelcomeBanner, [{
+        type: Component,
+        args: [{
                 selector: 'mod-welcome-banner',
-                template: "<header class=\"mod-header\" role=\"banner\">\r\n    <div class=\"mod-welcome-banner\">\r\n        <div class=\"welcome-user\">\r\n            <mod-user-display></mod-user-display>\r\n        </div>\r\n    </div>\r\n</header>\r\n",
-                styles: [".mod-header{display:flex;flex-direction:column}.mod-welcome-banner{padding-left:10px;padding-right:10px;background-color:#f0f0f0;padding-bottom:0;display:flex;font-family:Source Sans Pro Web,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}.welcome-user{font-weight:700;font-size:.85em;padding-top:2px;padding-right:5px;flex:1;display:flex;justify-content:flex-end}.loginout-button{vertical-align:middle;width:auto!important;display:inline!important}.loginout-text{align-items:center}"]
-            },] }
-];
-ModWelcomeBanner.ctorParameters = () => [];
-ModWelcomeBanner.propDecorators = {
-    onLogin: [{ type: Output }],
-    onLogout: [{ type: Output }]
-};
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9kLXdlbGNvbWUtYmFubmVyLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL21vZC1mcmFtZXdvcmsvc3JjL2xpYi9jb21wb25lbnRzL21vZC13ZWxjb21lLWJhbm5lci9tb2Qtd2VsY29tZS1iYW5uZXIuY29tcG9uZW50LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQVUsTUFBTSxFQUFFLFlBQVksRUFBRSxNQUFNLGVBQWUsQ0FBQztBQU94RSxNQUFNLE9BQU8sZ0JBQWdCO0lBT3pCO1FBTEEsWUFBTyxHQUFHLElBQUksWUFBWSxFQUFPLENBQUM7UUFHbEMsYUFBUSxHQUFHLElBQUksWUFBWSxFQUFPLENBQUM7SUFFbkIsQ0FBQztJQUVqQixRQUFRO0lBQ1IsQ0FBQzs7O1lBZkosU0FBUyxTQUFDO2dCQUNQLFFBQVEsRUFBRSxvQkFBb0I7Z0JBQzlCLGlQQUFrRDs7YUFFckQ7Ozs7c0JBRUksTUFBTTt1QkFHTixNQUFNIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBPbkluaXQsIE91dHB1dCwgRXZlbnRFbWl0dGVyIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbkBDb21wb25lbnQoe1xuICAgIHNlbGVjdG9yOiAnbW9kLXdlbGNvbWUtYmFubmVyJyxcbiAgICB0ZW1wbGF0ZVVybDogJy4vbW9kLXdlbGNvbWUtYmFubmVyLmNvbXBvbmVudC5odG1sJyxcbiAgICBzdHlsZVVybHM6IFsnLi9tb2Qtd2VsY29tZS1iYW5uZXIuY29tcG9uZW50LnNjc3MnXVxufSlcbmV4cG9ydCBjbGFzcyBNb2RXZWxjb21lQmFubmVyIGltcGxlbWVudHMgT25Jbml0IHtcbiAgICBAT3V0cHV0KClcbiAgICBvbkxvZ2luID0gbmV3IEV2ZW50RW1pdHRlcjxhbnk+KCk7XG5cbiAgICBAT3V0cHV0KClcclxuICAgIG9uTG9nb3V0ID0gbmV3IEV2ZW50RW1pdHRlcjxhbnk+KCk7XG5cbiAgICBjb25zdHJ1Y3RvcigpIHsgfVxuXG4gICAgbmdPbkluaXQoKSB7XG4gICAgfVxuXG59XG4iXX0=
+                templateUrl: './mod-welcome-banner.component.html',
+                styleUrls: ['./mod-welcome-banner.component.scss']
+            }]
+    }], function () { return []; }, { onLogin: [{
+            type: Output
+        }], onLogout: [{
+            type: Output
+        }] }); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9kLXdlbGNvbWUtYmFubmVyLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL21vZC1mcmFtZXdvcmsvc3JjL2xpYi9jb21wb25lbnRzL21vZC13ZWxjb21lLWJhbm5lci9tb2Qtd2VsY29tZS1iYW5uZXIuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvbW9kLWZyYW1ld29yay9zcmMvbGliL2NvbXBvbmVudHMvbW9kLXdlbGNvbWUtYmFubmVyL21vZC13ZWxjb21lLWJhbm5lci5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFVLE1BQU0sRUFBRSxZQUFZLEVBQUUsTUFBTSxlQUFlLENBQUM7OztBQU94RSxNQUFNLE9BQU8sZ0JBQWdCO0lBT3pCO1FBTEEsWUFBTyxHQUFHLElBQUksWUFBWSxFQUFPLENBQUM7UUFHbEMsYUFBUSxHQUFHLElBQUksWUFBWSxFQUFPLENBQUM7SUFFbkIsQ0FBQztJQUVqQixRQUFRO0lBQ1IsQ0FBQzs7Z0ZBVlEsZ0JBQWdCO3FEQUFoQixnQkFBZ0I7UUNQN0IsaUNBQXlDO1FBQ3JDLDhCQUFnQztRQUM1Qiw4QkFBMEI7UUFDdEIsbUNBQXFDO1FBQ3pDLGlCQUFNO1FBQ1YsaUJBQU07UUFDVixpQkFBUzs7dUZEQ0ksZ0JBQWdCO2NBTDVCLFNBQVM7ZUFBQztnQkFDUCxRQUFRLEVBQUUsb0JBQW9CO2dCQUM5QixXQUFXLEVBQUUscUNBQXFDO2dCQUNsRCxTQUFTLEVBQUUsQ0FBQyxxQ0FBcUMsQ0FBQzthQUNyRDtzQ0FHRyxPQUFPO2tCQUROLE1BQU07WUFJUCxRQUFRO2tCQURQLE1BQU0iLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIE9uSW5pdCwgT3V0cHV0LCBFdmVudEVtaXR0ZXIgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuQENvbXBvbmVudCh7XG4gICAgc2VsZWN0b3I6ICdtb2Qtd2VsY29tZS1iYW5uZXInLFxuICAgIHRlbXBsYXRlVXJsOiAnLi9tb2Qtd2VsY29tZS1iYW5uZXIuY29tcG9uZW50Lmh0bWwnLFxuICAgIHN0eWxlVXJsczogWycuL21vZC13ZWxjb21lLWJhbm5lci5jb21wb25lbnQuc2NzcyddXG59KVxuZXhwb3J0IGNsYXNzIE1vZFdlbGNvbWVCYW5uZXIgaW1wbGVtZW50cyBPbkluaXQge1xuICAgIEBPdXRwdXQoKVxuICAgIG9uTG9naW4gPSBuZXcgRXZlbnRFbWl0dGVyPGFueT4oKTtcblxuICAgIEBPdXRwdXQoKVxyXG4gICAgb25Mb2dvdXQgPSBuZXcgRXZlbnRFbWl0dGVyPGFueT4oKTtcblxuICAgIGNvbnN0cnVjdG9yKCkgeyB9XG5cbiAgICBuZ09uSW5pdCgpIHtcbiAgICB9XG5cbn1cbiIsIjxoZWFkZXIgY2xhc3M9XCJtb2QtaGVhZGVyXCIgcm9sZT1cImJhbm5lclwiPlxyXG4gICAgPGRpdiBjbGFzcz1cIm1vZC13ZWxjb21lLWJhbm5lclwiPlxyXG4gICAgICAgIDxkaXYgY2xhc3M9XCJ3ZWxjb21lLXVzZXJcIj5cclxuICAgICAgICAgICAgPG1vZC11c2VyLWRpc3BsYXk+PC9tb2QtdXNlci1kaXNwbGF5PlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgPC9kaXY+XHJcbjwvaGVhZGVyPlxyXG4iXX0=

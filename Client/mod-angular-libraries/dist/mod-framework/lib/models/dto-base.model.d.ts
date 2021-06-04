@@ -6,3 +6,4 @@ export declare abstract class DtoBase implements IDto {
     modifiedBy: string;
     modifiedTime: Date;
 }
+//# sourceMappingURL=dto-base.model.d.ts.map

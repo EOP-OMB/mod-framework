@@ -10,3 +10,4 @@ export declare class CurrentUser {
     roles: string[];
     displayName: string;
 }
+//# sourceMappingURL=current-user.model.d.ts.map

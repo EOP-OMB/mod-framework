@@ -1,6 +1,7 @@
 import { CurrentUser } from '../models/current-user.model';
 import { HttpClient } from '@angular/common/http';
 import { ModFrameworkConfig } from '../models/mod-framework-config.model';
+import * as i0 from "@angular/core";
 export declare class CurrentUserService {
     private http;
     loginPromise: Promise<CurrentUser>;
@@ -26,4 +27,7 @@ export declare class CurrentUserService {
     private handleError;
     isInRole(role: string): boolean;
     isInRoles(roles: string[]): boolean;
+    static ɵfac: i0.ɵɵFactoryDef<CurrentUserService, never>;
+    static ɵprov: i0.ɵɵInjectableDef<CurrentUserService>;
 }
+//# sourceMappingURL=current-user.service.d.ts.map

@@ -17,3 +17,4 @@ export declare class ModMenuItem {
     defaultState: string;
     allowedRoles: string[];
 }
+//# sourceMappingURL=mod-side-menu-config.model.d.ts.map

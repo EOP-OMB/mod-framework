@@ -6,3 +6,4 @@ export declare class UserInfo {
     userProfileUrl: string;
     constructor(uniqueName: string, upn: string);
 }
+//# sourceMappingURL=user-info.model.d.ts.map
