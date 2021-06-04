@@ -1,1 +1,0 @@
-{"version":3,"file":"user-info.model.d.ts","sourceRoot":"","sources":["../../../../projects/mod-framework/src/lib/models/user-info.model.ts"],"names":[],"mappings":"AAAA,qBAAa,QAAQ;IACjB,UAAU,EAAE,MAAM,CAAC;IACnB,GAAG,EAAE,MAAM,CAAC;IACZ,WAAW,EAAE,MAAM,CAAC;IACpB,YAAY,EAAE,MAAM,CAAC;IACrB,cAAc,EAAE,MAAM,CAAC;gBAEJ,UAAU,EAAE,MAAM,EAAE,GAAG,EAAE,MAAM;CAQrD"}

@@ -3,7 +3,6 @@ import { ModSideMenuConfig, ModMenuItem, ModMenuSection } from '../../models/mod
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CurrentUserService } from '../../services/current-user.service';
-import * as i0 from "@angular/core";
 export declare class ModSideMenuComponent implements OnInit, OnChanges {
     router: Router;
     private activatedRoute;
@@ -26,7 +25,4 @@ export declare class ModSideMenuComponent implements OnInit, OnChanges {
     toggleSideNav(): void;
     get viewableSections(): ModMenuSection[];
     getViewableMenuItems(section: ModMenuSection): ModMenuItem[];
-    static ɵfac: i0.ɵɵFactoryDef<ModSideMenuComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDefWithMeta<ModSideMenuComponent, "mod-side-menu", never, { "config": "config"; }, {}, never, ["*"]>;
 }
-//# sourceMappingURL=mod-side-menu.component.d.ts.map

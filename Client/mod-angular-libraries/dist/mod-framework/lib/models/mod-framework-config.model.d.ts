@@ -8,4 +8,3 @@ export declare class ModFrameworkConfig {
     userOptions: string[];
     profileUrl: string;
 }
-//# sourceMappingURL=mod-framework-config.model.d.ts.map

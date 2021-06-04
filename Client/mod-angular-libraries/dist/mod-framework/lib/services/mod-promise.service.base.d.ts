@@ -17,4 +17,3 @@ export declare abstract class ModPromiseServiceBase<T extends IDto> {
     formatResponse(data: T): T;
     handleError(error: Response | any): Promise<any>;
 }
-//# sourceMappingURL=mod-promise.service.base.d.ts.map

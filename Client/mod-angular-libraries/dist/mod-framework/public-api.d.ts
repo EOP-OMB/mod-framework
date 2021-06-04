@@ -17,4 +17,3 @@ export * from './lib/services/loading.interceptor';
 export * from './lib/services/loading.service';
 export * from './lib/services/mod-promise.service.base';
 export * from './lib/services/role-guard.service';
-//# sourceMappingURL=public-api.d.ts.map
