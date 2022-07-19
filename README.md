@@ -50,19 +50,19 @@ Create a folder under your root app folder (same level as src) called Certificat
 ## Configuring angular.json
 You'll need to update your angular.json file.
 
-### projects -> <project name> -> architect -> serve -> options with the following:
+### projects -> [project name] -> architect -> serve -> options with the following:
 
 Need to update host and add certificates to allow for ssl auth against the web api project.  
     
     "options": {
-        "browserTarget": "<app-specific",
+        "browserTarget": "[app-specific]",
         "ssl": true,
         "sslKey": "Certificates/host-name.key",
         "sslCert": "Certificates/host-name.pem",
         "host": "host-name"
     },
 
-### projects -> <project name> -> architect -> build -> options
+### projects -> [project name] -> architect -> build -> options
 
 This will help keep your linked module (mod-framework) from throwing injection errors:
     
