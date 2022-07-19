@@ -17,6 +17,8 @@ namespace Mod.Framework.Application
 
         IEnumerable<TDto> GetBy(Expression<Func<TEntity, bool>> predicate);
 
+        IEnumerable<TDto> GetByIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] propertySelectors);
+
         TDto Create(TDto dto);
 
         void Delete(TDto dto);

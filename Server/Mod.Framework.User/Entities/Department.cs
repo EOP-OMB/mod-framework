@@ -1,7 +1,5 @@
 ﻿using Mod.Framework.Domain.Entities.Auditing;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Mod.Framework.User.Entities
 {

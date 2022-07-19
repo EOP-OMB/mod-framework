@@ -12,8 +12,8 @@ namespace Mod.Framework.WebApi.Extensions
                 sharedOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.Authority = "https://adfs.autority.url/adfs";
-                options.Audience = "adfsAudienceGuid"; 
+                options.Authority = "https://adfs.omb.gov/adfs";
+                options.Audience = "d26b0eb6-6c0d-4292-8419-f3ea86a4f338"; //"90d55aa7-81f7-46f7-9454-9a845cfb407e";
                 options.RequireHttpsMetadata = true;
             });
 

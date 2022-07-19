@@ -5,19 +5,16 @@ using Mod.Framework.Notifications.Enumerations;
 using Mod.Framework.Runtime.Security;
 using Mod.Framework.User.Entities;
 using Mod.Framework.User.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Mod.Framework.Notifications.Domain.Services
 {
     public class NotificationDomService : INotificationDomService
     {
-        private INotificationTemplateRepository TemplateRepository;
-        private INotificationRepository Repository;
-        private IApplicationRoles ApplicationRoles;
-        private IEmployeeRepository EmployeeRepository;
-        private ILogger Logger;
+        private readonly INotificationTemplateRepository TemplateRepository;
+        private readonly INotificationRepository Repository;
+        private readonly IApplicationRoles ApplicationRoles;
+        private readonly IEmployeeRepository EmployeeRepository;
 
         public NotificationDomService(INotificationTemplateRepository templateRepository, INotificationRepository repository, IApplicationRoles appRoles, IEmployeeRepository employeeRepository, ILogger<NotificationDomService> logger)
         {
@@ -25,7 +22,6 @@ namespace Mod.Framework.Notifications.Domain.Services
             this.Repository = repository;
             this.ApplicationRoles = appRoles;
             this.EmployeeRepository = employeeRepository;
-            this.Logger = logger;
         }
 
         public Notification CreateNotification(int notificationType, string recipient, Dictionary<string, string> dictionary)
@@ -56,7 +52,7 @@ namespace Mod.Framework.Notifications.Domain.Services
         {
             var notification = new Notification();
 
-            notification.UpdateCurrentStatus((int)NotificationStatuses.PENDING);
+            notification.UpdateCurrentStatus(NotificationStatuses.PENDING.ToString());
             notification.NotificationTemplateId = template.Id;
 
             var subject = Replace(template.Subject, dictionary);
@@ -90,9 +86,9 @@ namespace Mod.Framework.Notifications.Domain.Services
             }
 
             notification.Recipient = notification.Recipient.TrimEnd(',');
-
+            
             if (template.IncludeCc)
-                notification.Cc = dictionary["Cc"];
+                notification.Cc = dictionary.TryGetValue("Cc", out string value) ? value : "";
 
             return notification;
         }

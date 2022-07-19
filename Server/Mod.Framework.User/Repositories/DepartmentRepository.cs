@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Mod.Framework.EfCore.Repositories;
 using Mod.Framework.User.Entities;
 using Mod.Framework.User.Interfaces;
@@ -9,24 +10,40 @@ namespace Mod.Framework.User.Repositories
 {
     public class DepartmentRepository : CachedRepositoryBase<UserContext, Department>, IDepartmentRepository
     {
-        public DepartmentRepository(UserContext context) : base(context)
+        public DepartmentRepository(IDistributedCache cache, UserContext context) : base(cache, context)
         {
         }
 
-        public override Department Get(int id)
-        {
-            var entity = Table.AsQueryable()
-                    .Include(x => x.Children)
-                    .Include(x => x.Employees)
-                        .ThenInclude(x => x.EmployeeAttributes)
-                    .Include(x => x.InternalOrg)
-                    .Single(x => x.Id == id);
+        //public override Department Get(int id)
+        //{
+        //    var name = GetIdString(id);
+        //    var entity = FromCache(name);
 
-            return entity;
-        }
-        public override List<Department> GetAll()
+        //    if (entity == null)
+        //    {
+        //        entity = Table.AsQueryable()
+        //            .Include(x => x.Children)
+        //            .Include(x => x.Employees)
+        //                .ThenInclude(x => x.EmployeeAttributes)
+        //            .Include(x => x.InternalOrg)
+        //            .Single(x => x.Id == id);
+        //        ToCache(name, entity);
+        //    }
+            
+        //    return entity;
+        //}
+
+        public List<Department> GetRoot()
         {
-            return base.Query().Where(x => x.ParentDepartmentId == null).ToList();
+            var list = FromCacheList(CacheName);
+            
+            if (list == null)
+            {
+                list = base.Query().Where(x => x.ParentDepartmentId == null).ToList();
+                ToCache(CacheName, list);
+            }
+            
+            return list;
         }
     }
 }

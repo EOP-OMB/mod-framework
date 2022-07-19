@@ -77,9 +77,26 @@ namespace Mod.Framework.Domain.Repositories
         /// Gets an entity with given primary key.
         /// </summary>
         /// <param name="id">Primary key of the entity to get</param>
+        /// <param name="predicate">A condition to filter entities</param>
+        /// <returns>Entity</returns>
+        TEntity Get(TPrimaryKey id, Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// Gets an entity with given primary key.
+        /// </summary>
+        /// <param name="id">Primary key of the entity to get</param>
         /// <param name="propertySelectors">A list of include expressions.</param>
         /// <returns>Entity</returns>
         TEntity GetIncluding(TPrimaryKey id, params Expression<Func<TEntity, object>>[] propertySelectors);
+
+        /// <summary>
+        /// Gets an entity with given primary key.
+        /// </summary>
+        /// <param name="id">Primary key of the entity to get</param>
+        /// <param name="propertySelectors">A list of include expressions.</param>
+        /// <param name="predicate">A condition to filter entities</param>
+        /// <returns>Entity</returns>
+        TEntity GetIncluding(TPrimaryKey id, Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] propertySelectors);
 
         /// <summary>
         /// Used to get all entities.
@@ -131,8 +148,23 @@ namespace Mod.Framework.Domain.Repositories
         /// Gets exactly one entity with given primary key throws an exception if not found or more than one returned
         /// </summary>
         /// <param name="id">Primary key of the entity to get</param>
-        /// <returns>Entity or null</returns>
+        /// <returns>Entity</returns>
         TEntity Single(TPrimaryKey id);
+
+        /// <summary>
+        /// Gets exactly one entity with given predicate or null if not found.
+        /// Throws exception if more than one entity.
+        /// </summary>
+        /// <param name="predicate">Entity or null</param>
+        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// Gets exactly one entity with given predicate or null if not found.
+        /// Throws exception if more than one entity.
+        /// </summary>
+        /// <param name="id">Primary key of the entity to get</param>
+        /// <returns>Entity or null</returns>
+        TEntity SingleOrDefault(TPrimaryKey id);
 
         /// <summary>
         /// Gets an entity with given primary key or null if not found.

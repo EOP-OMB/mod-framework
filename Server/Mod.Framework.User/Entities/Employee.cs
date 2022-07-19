@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace Mod.Framework.User.Entities
 {
@@ -83,6 +81,19 @@ namespace Mod.Framework.User.Entities
             var attr = GetAttribute(key);
 
             return attr == null ? null : attr.Value;
+        }
+
+        public void SetAttributeValue(string key, string value)
+        {
+            var attr = GetAttribute(key);
+
+            if (attr == null)
+            {
+                attr = new EmployeeAttribute() { Attribute = key };
+                this.EmployeeAttributes.Add(attr);
+            }
+                
+            attr.Value = value;
         }
 
         public bool HasAttributeValue(string key)

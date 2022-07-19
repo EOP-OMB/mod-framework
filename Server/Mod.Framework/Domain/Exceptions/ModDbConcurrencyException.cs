@@ -1,8 +1,6 @@
 ﻿using Mod.Framework.Exceptions;
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Mod.Framework.Domain.Exceptions
 {
@@ -10,7 +8,7 @@ namespace Mod.Framework.Domain.Exceptions
     public class ModDbConcurrencyException : ModException
     {
         /// <summary>
-        /// Creates a new <see cref="AbpDbConcurrencyException"/> object.
+        /// Creates a new <see cref="ModDbConcurrencyException"/> object.
         /// </summary>
         public ModDbConcurrencyException()
         {
@@ -18,7 +16,7 @@ namespace Mod.Framework.Domain.Exceptions
         }
 
         /// <summary>
-        /// Creates a new <see cref="AbpException"/> object.
+        /// Creates a new <see cref="ModException"/> object.
         /// </summary>
         public ModDbConcurrencyException(SerializationInfo serializationInfo, StreamingContext context)
             : base(serializationInfo, context)
@@ -27,7 +25,7 @@ namespace Mod.Framework.Domain.Exceptions
         }
 
         /// <summary>
-        /// Creates a new <see cref="AbpDbConcurrencyException"/> object.
+        /// Creates a new <see cref="ModDbConcurrencyException"/> object.
         /// </summary>
         /// <param name="message">Exception message</param>
         public ModDbConcurrencyException(string message)
@@ -37,7 +35,7 @@ namespace Mod.Framework.Domain.Exceptions
         }
 
         /// <summary>
-        /// Creates a new <see cref="AbpDbConcurrencyException"/> object.
+        /// Creates a new <see cref="ModDbConcurrencyException"/> object.
         /// </summary>
         /// <param name="message">Exception message</param>
         /// <param name="innerException">Inner exception</param>

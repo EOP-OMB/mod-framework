@@ -9,7 +9,7 @@ using Mod.Framework.Runtime.Session;
 namespace Mod.Framework.Application
 {
     public abstract class CrudAppServiceBase<TDto, TEntity, TPrimaryKey> : AppService
-        where TEntity : class, IEntity<TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>
         where TDto : IDto<TPrimaryKey>
     {
         protected readonly IRepository<TEntity, TPrimaryKey> Repository;

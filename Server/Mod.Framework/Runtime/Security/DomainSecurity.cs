@@ -17,7 +17,7 @@ namespace Mod.Framework.Runtime.Security
         /// </summary>
         /// <param name="wildcardDomains"></param>
         /// <param name="failureUrl"></param>
-        public static void Configure(IEnumerable<string> wildcardDomains, string failureUrl = "")
+        public static void Configure(IEnumerable<string> wildcardDomains, string failureUrl = "https://status.omb.gov")
         {
             AllowedDomains = new List<string>();
             foreach (var wildcardDomain in wildcardDomains)

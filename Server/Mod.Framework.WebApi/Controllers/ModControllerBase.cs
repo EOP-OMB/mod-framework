@@ -42,9 +42,9 @@ namespace Mod.Framework.WebApi.Controllers
             }
         }
 
-        public override JsonResult Json(Object obj)
+        public override JsonResult Json(Object data)
         {
-            return Json(obj, CamelCase);
+            return Json(data, CamelCase);
         }
     }
 }

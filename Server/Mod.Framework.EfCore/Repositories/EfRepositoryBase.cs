@@ -149,7 +149,7 @@ namespace Mod.Framework.EfCore.Repositories
 
         protected virtual void AttachIfNot(TEntity entity)
         {
-            var entry = Context.ChangeTracker.Entries().FirstOrDefault(ent => ent != null ? ent.Entity.Equals(entity) : false);
+            var entry = Context.ChangeTracker.Entries().FirstOrDefault(ent => ent != null && ent.Entity.Equals(entity));
             if (entry != null)
             {
                 return;

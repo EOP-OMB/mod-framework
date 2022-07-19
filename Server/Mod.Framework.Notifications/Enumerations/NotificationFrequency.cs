@@ -9,6 +9,7 @@ namespace Mod.Framework.Notifications.Enumerations
         REAL_TIME,
         DAILY,
         WEEKLY,
-        MONTHLY
+        MONTHLY,
+        HOURLY,
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Mod.Framework.Extensions;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Mod.Framework.Domain.Entities.Auditing
 {
@@ -13,7 +14,7 @@ namespace Mod.Framework.Domain.Entities.Auditing
             {
                 var entity = entityAsObj as ICreationAudited;
 
-                entity.CreatedTime = DateTime.Now;
+                entity.CreatedTime = DateTime.UtcNow;
 
                 if (string.IsNullOrEmpty(userId))
                 {
@@ -45,7 +46,7 @@ namespace Mod.Framework.Domain.Entities.Auditing
                     entity.ModifiedBy = userId;
                 }
 
-                entity.ModifiedTime = DateTime.Now;
+                entity.ModifiedTime = DateTime.UtcNow;
             }
         }
 
@@ -62,9 +63,28 @@ namespace Mod.Framework.Domain.Entities.Auditing
 
                 if (entity.DeletedTime == null)
                 {
-                    entity.DeletedTime = DateTime.Now;
+                    entity.DeletedTime = DateTime.UtcNow;
                 }
             }
+        }
+
+        public static DateTime ConvertToTimeZone(DateTime dateTime, TimeZoneInfo timeZoneInfo = null)
+        {
+            if (timeZoneInfo == null)
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                }
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
+                }
+            }
+
+            var estDate = TimeZoneInfo.ConvertTimeFromUtc(dateTime, timeZoneInfo);
+            
+            return estDate;
         }
     }
 }

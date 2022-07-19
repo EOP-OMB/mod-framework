@@ -8,6 +8,7 @@ namespace Mod.Framework.Notifications.Enumerations
     {
         PENDING,
         SENT,
-        ERROR
+        ERROR,
+        IN_PROCESS
     }
 }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
+
 
 namespace Mod.Framework.Configuration
 {
@@ -16,27 +15,14 @@ namespace Mod.Framework.Configuration
         /// </summary>
         /// <param name="keyName"></param>
         /// <returns></returns>
-        /// <remarks>
-        /// Optionally, if environment variable <secret>.SecretName is defined, then the value
-        /// of that is used as the secret name rather than the given secret name.
-        /// In other words, you could have a secret named "X".  If environment varable
-        /// "X.SecretName" exists, and has the value "Y", then Secrets["X"] returns the value of
-        /// secret "Y" (which has to exist).   If environment variable "X.SecretName" doesn't exist,
-        /// then Secrets["X"] returns the value of secret "X", which again, has to exist.
-        /// </remarks>
         public string this[string keyName]
         {
             get
             {
-                var secretName = keyName;
-                if (!string.IsNullOrEmpty(ConfigurationManager.Settings[keyName + ".SecretName"]))
-                {
-                    secretName = ConfigurationManager.Settings[keyName + ".SecretName"];
-                }
-                string returnValue = TryGetValue(secretName);
+                string returnValue = TryGetValue(keyName);
                 if (string.IsNullOrEmpty(returnValue))
                 {
-                    throw new Exception("Secret or Environment variable \"" + secretName + "\" is missing or malformed.");
+                    throw new KeyNotFoundException($"Secret or Environment variable \"{keyName}\" is missing or malformed.");
                 }
                 return returnValue;
             }
@@ -49,26 +35,43 @@ namespace Mod.Framework.Configuration
         /// <returns></returns>
         public bool Exists(string keyName)
         {
-            var secretName = keyName;
-            if (!string.IsNullOrEmpty(ConfigurationManager.Settings[keyName + ".SecretName"]))
-            {
-                secretName = ConfigurationManager.Settings[keyName + ".SecretName"];
-            }
-            return (!string.IsNullOrEmpty(TryGetValue(secretName)));
+            return (!string.IsNullOrEmpty(TryGetValue(keyName)));
         }
+
 
         private string TryGetValue(string keyName)
         {
-            string returnValue;
-            if (ConfigurationManager.RunningInContainer && File.Exists(Constants.DOCKER_SECRETS_DIR + keyName))
+            string returnValue = string.Empty;
+
+            if (File.Exists(Constants.DOCKER_SECRETS_DIR_LINUX + keyName))
             {
-                returnValue = File.ReadAllText(Constants.DOCKER_SECRETS_DIR + keyName);
+                try
+                {
+                    returnValue = File.ReadAllText(Constants.DOCKER_SECRETS_DIR_LINUX + keyName).TrimEnd(System.Environment.NewLine.ToCharArray()).Trim();
+                }
+                catch
+                {
+                    // if the secret file doesn't exist, try environment below
+                }
             }
-            else
+            else if (File.Exists(Constants.DOCKER_SECRETS_DIR_WINDOWS + keyName))
             {
-                returnValue = Environment.GetEnvironmentVariable(keyName);
+                try
+                {
+                    returnValue = File.ReadAllText(Constants.DOCKER_SECRETS_DIR_WINDOWS + keyName).TrimEnd(System.Environment.NewLine.ToCharArray()).Trim();
+                }
+                catch
+                {
+                    // if the secret file doesn't exist, try environment below
+                }
             }
-            return returnValue;
+
+            if (string.IsNullOrEmpty(returnValue))
+            {
+                returnValue = Environment.Variable(keyName);
+            }
+
+            return returnValue ?? string.Empty;
         }
     }
 

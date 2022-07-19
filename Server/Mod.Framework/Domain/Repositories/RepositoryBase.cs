@@ -1,4 +1,5 @@
-﻿using Mod.Framework.Domain.Entities;
+﻿using Mod.Framework.Application;
+using Mod.Framework.Domain.Entities;
 using Mod.Framework.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -56,15 +57,29 @@ namespace Mod.Framework.Domain.Repositories
 
         public virtual TEntity Get(TPrimaryKey id)
         {
-            var entity = Single(id);
+            var entity = SingleOrDefault(id);
             
             return entity;
         }
 
+        public virtual TEntity Get(TPrimaryKey id, Expression<Func<TEntity, bool>> predicate)
+        {
+            var filter = predicate.And(CreateEqualityExpressionForId(id));
+            var entity = Single(filter);
+
+            return entity;
+        }
 
         public virtual TEntity GetIncluding(TPrimaryKey id, params Expression<Func<TEntity, object>>[] propertySelectors)
         {
-            return QueryIncluding(propertySelectors).Single(CreateEqualityExpressionForId(id));
+            return QueryIncluding(propertySelectors).SingleOrDefault(CreateEqualityExpressionForId(id));
+        }
+
+        public virtual TEntity GetIncluding(TPrimaryKey id, Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] propertySelectors)
+        {
+            var filter = predicate.And(CreateEqualityExpressionForId(id));
+
+            return QueryIncluding(propertySelectors).SingleOrDefault(filter);
         }
 
         public virtual List<TEntity> GetAll()
@@ -142,6 +157,16 @@ namespace Mod.Framework.Domain.Repositories
         public virtual TEntity Single(Expression<Func<TEntity, bool>> predicate)
         {
             return Query().Single(predicate);
+        }
+
+        public virtual TEntity SingleOrDefault(TPrimaryKey id)
+        {
+            return Query().SingleOrDefault(CreateEqualityExpressionForId(id));
+        }
+
+        public virtual TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Query().SingleOrDefault(predicate);
         }
 
         public abstract TEntity Update(TEntity entity);

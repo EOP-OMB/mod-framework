@@ -5,6 +5,7 @@ namespace Mod.Framework.Application
     public class CrudEventArgs<TDto, TEntity> : EventArgs
     {
         public bool Cancel { get; set; }
+        public string Msg { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; } 
 
@@ -20,7 +21,7 @@ namespace Mod.Framework.Application
 
         public CrudEventArgs() : base()
         {
-            this.StartTime = DateTime.Now;
+            this.StartTime = DateTime.UtcNow;
             this.Cancel = false;
         }
     }

@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Mod.Framework.Domain.Entities;
-using Mod.Framework.Domain.Repositories;
-using Mod.Framework.Extensions;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace Mod.Framework.EfCore.Repositories
 {
@@ -13,7 +16,7 @@ namespace Mod.Framework.EfCore.Repositories
          where TEntity : class, IEntity<int>
          where TDbContext : DbContext
     {
-        public CachedRepositoryBase(TDbContext context) : base(context)
+        public CachedRepositoryBase(IDistributedCache cache, TDbContext context) : base(cache, context)
         {
         }
     }
@@ -24,20 +27,66 @@ namespace Mod.Framework.EfCore.Repositories
 
     {
         protected readonly static string CacheName = "Cache-" + (typeof(TEntity)).ToString();
+        protected IDistributedCache Cache { get; private set; }
 
-        public CachedRepositoryBase(TDbContext context) : base(context)
+        public CachedRepositoryBase(IDistributedCache cache, TDbContext context) : base(context)
         {
+            Cache = cache;
+        }
+
+        public override void SaveChanges()
+        {
+            base.SaveChanges();
+            Cache.Remove(CacheName);
+        }
+
+        protected TEntity FromCache(string name)
+        {
+            var bytes = Cache.Get(name);
+            TEntity entity = null;
+
+            if (bytes != null)
+            {
+                entity = JsonSerializer.Deserialize<TEntity>(bytes);
+            }
+
+            return entity;
+        }
+
+        protected List<TEntity> FromCacheList(string name)
+        {
+            var bytes = Cache.Get(name);
+            List<TEntity> list = null;
+
+            if (bytes != null)
+            {
+                list = JsonSerializer.Deserialize<List<TEntity>>(bytes);
+            }
+
+            return list;
+        }   
+
+        protected void ToCache(string name, TEntity entity)
+        {
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(entity);
+            Cache.Set(name, bytes);
+        }
+
+        protected void ToCache(string name, List<TEntity> list)
+        {
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(list);
+            Cache.Set(name, bytes);
         }
 
         public override TEntity Get(TPrimaryKey id)
         {
             var name = GetIdString(id);
-            TEntity entity = (TEntity)MemCache.Get(name);
+            TEntity entity = FromCache(name);
 
             if (entity == null)
             {
                 entity = base.Get(id);
-                MemCache.Add(name, entity);
+                ToCache(name, entity);
             }
             else
             {
@@ -49,12 +98,12 @@ namespace Mod.Framework.EfCore.Repositories
 
         public override List<TEntity> GetAll()
         {
-            List<TEntity> list = (List<TEntity>)MemCache.Get(CacheName);
+            List<TEntity> list = FromCacheList(CacheName);
 
             if (list == null)
             {
                 list = base.GetAll();
-                MemCache.Add(CacheName, list);
+                ToCache(CacheName, list);
             }
 
             return list;
@@ -85,8 +134,8 @@ namespace Mod.Framework.EfCore.Repositories
 
         private void ClearCache(TEntity entity)
         {
-            MemCache.Clear(CacheName);
-            MemCache.Clear(GetIdString(entity.Id));
+            Cache.Remove(CacheName);
+            Cache.Remove(GetIdString(entity.Id));
         }
 
         protected string GetIdString(TPrimaryKey id)

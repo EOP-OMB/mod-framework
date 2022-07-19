@@ -1,12 +1,14 @@
-﻿using Mod.Framework.Domain.Entities.Auditing;
+﻿using Mod.Framework.Domain.Entities;
+using Mod.Framework.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
 namespace Mod.Framework.Notifications.Domain.Entities
 {
-    public class Notification : AuditedEntity
+    public class Notification : AuditedEntity, IHasConcurrencyToken
     {
         public int NotificationTemplateId { get; set; }
         public int Type { get; set; }
@@ -20,8 +22,10 @@ namespace Mod.Framework.Notifications.Domain.Entities
 
         public virtual NotificationTemplate NotificationTemplate { get; set; }
         public virtual ICollection<NotificationStatus> NotificationStatuses { get; set; }
+        [Timestamp]
+        public byte[] ConcurrencyToken { get; set; }
 
-        public void UpdateCurrentStatus(int status, string message = null)
+        public void UpdateCurrentStatus(string status, string message = null)
         {
             if (this.NotificationStatuses == null)
                 this.NotificationStatuses = new List<NotificationStatus>();
@@ -33,7 +37,7 @@ namespace Mod.Framework.Notifications.Domain.Entities
             });
         }
 
-        public int Status
+        public string Status
         {
             get
             {

@@ -18,13 +18,13 @@ namespace Mod.Framework.Configuration
             get
             {
                 string returnValue;
-                if (File.Exists(Constants.DOCKER_SECRETS_DIR + keyName))
+                if (ConfigurationManager.Secrets.Exists(keyName))
                 {
-                    returnValue = File.ReadAllText(Constants.DOCKER_SECRETS_DIR + keyName);
+                    returnValue = ConfigurationManager.Secrets[keyName];
                 }
                 else
                 {
-                    returnValue = Environment.GetEnvironmentVariable(keyName);
+                    returnValue = Environment.Variable(keyName);
                 }
                 return returnValue;
             }

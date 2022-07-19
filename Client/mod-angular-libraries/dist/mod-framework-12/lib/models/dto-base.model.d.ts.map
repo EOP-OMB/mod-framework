@@ -1,0 +1,1 @@
+{"version":3,"file":"dto-base.model.d.ts","sourceRoot":"","sources":["../../../../projects/mod-framework/src/lib/models/dto-base.model.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,6BAA6B,CAAC;AAEnD,8BAAsB,OAAQ,YAAW,IAAI;IACzC,EAAE,EAAE,MAAM,CAAK;IACf,SAAS,EAAE,MAAM,CAAC;IAClB,WAAW,EAAE,IAAI,CAAC;IAClB,UAAU,EAAE,MAAM,CAAC;IACnB,YAAY,EAAE,IAAI,CAAC;CACtB"}

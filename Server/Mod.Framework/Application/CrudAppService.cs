@@ -14,7 +14,7 @@ namespace Mod.Framework.Application
 {
     public abstract class CrudAppService<TDto, TEntity> : CrudAppService<TDto, TEntity, int>
         where TDto : IDto<int>
-        where TEntity : class, IEntity<int>
+        where TEntity : IEntity<int>, new()
     {
         public CrudAppService(IRepository<TEntity, int> repository, IObjectMapper objectMapper, ILogger<IAppService> logger, IModSession session) : base(repository, objectMapper, logger, session)
         {
@@ -23,7 +23,7 @@ namespace Mod.Framework.Application
 
     public abstract class CrudAppService<TDto, TEntity, TPrimaryKey> : CrudAppServiceBase<TDto, TEntity, TPrimaryKey>, ICrudAppService<TDto, TEntity, TPrimaryKey>
         where TDto : IDto<TPrimaryKey>
-        where TEntity : class, IEntity<TPrimaryKey>
+        where TEntity : IEntity<TPrimaryKey>, new()
     {
         public CrudAppService(IRepository<TEntity, TPrimaryKey> repository, IObjectMapper objectMapper, ILogger<IAppService> logger, IModSession session) : base(repository, objectMapper, logger, session)
         {
@@ -46,7 +46,9 @@ namespace Mod.Framework.Application
             {
                 Repository.Insert(e.Entity);
 
-                e.Dto = MapToDto(e.Entity);
+                e.Dto = PostMap(MapToDto(e.Entity));
+
+                OnCreated(e);
             }
 
             return e.Dto;
@@ -59,7 +61,6 @@ namespace Mod.Framework.Application
         protected virtual void OnBeforeCreate(CrudEventArgs<TDto, TEntity> e)
         {
         }
-
 
         public virtual void Delete(TDto dto)
         {
@@ -79,9 +80,9 @@ namespace Mod.Framework.Application
             if (!Permissions.CanRead)
                 throw new SecurityException("Access denied.  Cannot read object of type " + typeof(TEntity).Name);
 
-            var entity = Repository.Get(id);
+            var entity = Repository.Get(id, this.Permissions.PermissionFilter);
 
-            return MapToDto(entity);
+            return PostMap(MapToDto(entity));
         }
 
         public virtual TDto GetIncluding(TPrimaryKey id, params Expression<Func<TEntity, object>>[] propertySelectors)
@@ -89,9 +90,9 @@ namespace Mod.Framework.Application
             if (!Permissions.CanRead)
                 throw new SecurityException("Access denied.  Cannot read object of type " + typeof(TEntity).Name);
 
-            var entity = Repository.GetIncluding(id, propertySelectors);
+            var entity = Repository.GetIncluding(id, this.Permissions.PermissionFilter, propertySelectors);
 
-            return MapToDto(entity);
+            return PostMap(MapToDto(entity));
         }
 
         public virtual IEnumerable<TDto> GetAll()
@@ -99,9 +100,9 @@ namespace Mod.Framework.Application
             if (!Permissions.CanRead)
                 throw new SecurityException("Access denied.  Cannot read object of type " + typeof(TEntity).Name);
 
-            var entities = Repository.GetAll();
+            var entities = Repository.GetAll(this.Permissions.PermissionFilter);
 
-            return entities.Select(MapToDto).ToList();
+            return entities.Select(Map).ToList();
         }
 
         public virtual IEnumerable<TDto> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
@@ -109,9 +110,14 @@ namespace Mod.Framework.Application
             if (!Permissions.CanRead)
                 throw new SecurityException("Access denied.  Cannot read object of type " + typeof(TEntity).Name);
 
-            var entities = Repository.GetAllIncluding(propertySelectors);
+            var entities = Repository.GetAllIncluding(this.Permissions.PermissionFilter, propertySelectors);
 
-            return entities.Select(MapToDto).ToList();
+            return entities.Select(Map).ToList();
+        }
+
+        protected TDto Map(TEntity entity)
+        {
+            return PostMap(MapToDto(entity));
         }
 
         public virtual IEnumerable<TDto> GetBy(Expression<Func<TEntity, bool>> predicate)
@@ -119,9 +125,11 @@ namespace Mod.Framework.Application
             if (!Permissions.CanRead)
                 throw new SecurityException("Access denied.  Cannot read object of type " + typeof(TEntity).Name);
 
-            var entities = Repository.GetAll(predicate);
+            var filterPredicate = predicate.And(Permissions.PermissionFilter);
 
-            return entities.Select(MapToDto).ToList();
+            var entities = Repository.GetAll(filterPredicate);
+
+            return entities.Select(Map).ToList();
         }
 
         public virtual IEnumerable<TDto> GetByIncluding(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] propertySelectors)
@@ -129,9 +137,11 @@ namespace Mod.Framework.Application
             if (!Permissions.CanRead)
                 throw new SecurityException("Access denied.  Cannot read object of type " + typeof(TEntity).Name);
 
-            var entities = Repository.GetAllIncluding(predicate, propertySelectors);
+            var filterPredicate = predicate.And(Permissions.PermissionFilter);
 
-            return entities.Select(MapToDto).ToList();
+            var entities = Repository.GetAllIncluding(filterPredicate, propertySelectors);
+
+            return entities.Select(Map).ToList();
         }
 
         public virtual TDto Update(TDto dto)
@@ -140,7 +150,7 @@ namespace Mod.Framework.Application
                 throw new SecurityException("Access denied.  Cannot update object of type " + typeof(TEntity).Name);
 
             var e = new CrudEventArgs<TDto, TEntity>();
-            var entity = Repository.Get(dto.Id);
+            var entity = Repository.Get(dto.Id, this.Permissions.PermissionFilter);
 
             e.Entity = entity;
             e.Dto = dto;
@@ -153,7 +163,7 @@ namespace Mod.Framework.Application
 
                 Repository.Update(e.Entity);
 
-                e.Dto = MapToDto(e.Entity);
+                e.Dto = PostMap(MapToDto(e.Entity));
 
                 OnUpdated(e);
             }
@@ -167,6 +177,11 @@ namespace Mod.Framework.Application
 
         protected virtual void OnBeforeUpdate(CrudEventArgs<TDto, TEntity> e)
         {
+        }
+
+        protected virtual TDto PostMap(TDto dto)
+        {
+            return dto;
         }
     }
 }

@@ -19,8 +19,9 @@ namespace Mod.Framework.WebApi.Extensions
             })
             .AddWsFederation(options =>
             {
-                options.Wtrealm = "URN"; 
-                options.MetadataAddress = "https://adfs.url/federationmetadata/2007-06/federationmetadata.xml";
+                options.Wtrealm = "URN:WSFEDAPP"; 
+                options.MetadataAddress = "https://adfs.omb.gov/federationmetadata/2007-06/federationmetadata.xml";
+                options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Events = new WsFederationEvents()
                 {
                     // These are more for interest than anything else
@@ -66,6 +67,7 @@ namespace Mod.Framework.WebApi.Extensions
             {
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.CookieManager = new ChunkingCookieManager();
             });
 

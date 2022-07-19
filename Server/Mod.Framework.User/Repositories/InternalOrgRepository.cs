@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Mod.Framework.EfCore.Repositories;
 using Mod.Framework.User.Entities;
 using Mod.Framework.User.Interfaces;
@@ -9,7 +10,7 @@ namespace Mod.Framework.User.Repositories
 {
     public class InternalOrgRepository : CachedRepositoryBase<UserContext, InternalOrg>, IInternalOrgRepository
     {
-        public InternalOrgRepository(UserContext context) : base(context)
+        public InternalOrgRepository(IDistributedCache cache, UserContext context) : base(cache, context)
         {
         }
     }

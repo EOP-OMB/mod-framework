@@ -9,7 +9,7 @@ namespace Mod.Framework.Notifications.Domain.Entities
     public class NotificationStatus : AuditedEntity
     {
         public int NotificationId { get; set; }
-        public int Status { get; set; }
+        public string Status { get; set; }
         public string Message { get; set; }
 
         public virtual Notification Notification { get; set; }

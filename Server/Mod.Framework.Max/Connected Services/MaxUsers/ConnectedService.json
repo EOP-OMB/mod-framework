@@ -1,0 +1,43 @@
+﻿{
+  "ProviderId": "Unchase.OData.ConnectedService",
+  "Version": "1.4.1.0",
+  "GettingStartedDocument": {
+    "Uri": "https://msdn.microsoft.com/en-us/library/cc668772(v=vs.110).aspx"
+  },
+  "ExtendedData": {
+    "OperationImportsGenerator": 0,
+    "IncludeExtensionsT4File": false,
+    "GenerateOperationImports": false,
+    "ServiceName": "WebDataServices",
+    "AcceptAllUntrustedCertificates": false,
+    "Endpoint": "https://feeds.max.gov/maxdata/max/maxusers.svc/$metadata",
+    "EdmxVersion": {
+      "Major": 1,
+      "Minor": 0,
+      "Build": 0,
+      "Revision": 0,
+      "MajorRevision": 0,
+      "MinorRevision": 0
+    },
+    "GeneratedFileNamePrefix": "Reference",
+    "UseNameSpacePrefix": false,
+    "NamespacePrefix": null,
+    "UseDataServiceCollection": false,
+    "UseAsyncDataServiceCollection": false,
+    "OpenGeneratedFilesOnComplete": false,
+    "LanguageOption": 0,
+    "FunctionImports": null,
+    "OperationImports": null,
+    "ExcludedOperationImportsNames": "",
+    "UseNetworkCredentials": true,
+    "NetworkCredentialsUserName": "101ceedd",
+    "NetworkCredentialsPassword": "5fa32db6012e702e",
+    "NetworkCredentialsDomain": null,
+    "WebProxyUri": null,
+    "UseWebProxy": false,
+    "UseWebProxyCredentials": false,
+    "WebProxyNetworkCredentialsUserName": null,
+    "WebProxyNetworkCredentialsPassword": null,
+    "WebProxyNetworkCredentialsDomain": null
+  }
+}

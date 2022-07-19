@@ -1,13 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Mod.Framework.Application;
 using Mod.Framework.Application.ObjectMapping;
+using Mod.Framework.Domain.Exceptions;
 using Mod.Framework.Notifications.Domain.Entities;
 using Mod.Framework.Notifications.Domain.Interfaces;
 using Mod.Framework.Notifications.Enumerations;
 using Mod.Framework.Notifications.Extensions;
+using Mod.Framework.Runtime.Security;
 using Mod.Framework.Runtime.Session;
 using System;
 using System.Collections.Generic;
@@ -41,79 +44,106 @@ namespace Mod.Framework.Notifications.Hosting
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using (var scope = _serviceScopeFactory.CreateScope())
+            // Ensures that this runs asynchronously
+            // https://blog.stephencleary.com/2020/05/backgroundservice-gotcha-startup.html
+            await Task.Yield();
+
+            stoppingToken.Register(() => Logger.LogInformation("NotificationBackgroundService background task is stopping."));
+
+            while (!stoppingToken.IsCancellationRequested)
             {
-                Repository = scope.ServiceProvider.GetRequiredService<INotificationRepository>();
-                TemplateRepository = scope.ServiceProvider.GetRequiredService<INotificationTemplateRepository>();
-                Session = scope.ServiceProvider.GetRequiredService<IModSession>();
-
-                RegisterScopedServices(scope);
-
-                Logger.LogDebug("NotificationBackgroundService is starting.");
-
-                stoppingToken.Register(() => Logger.LogDebug("#1 NotificationBackgroundService background task is stopping."));
-
-                while (!stoppingToken.IsCancellationRequested)
+                using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    Logger.LogDebug("NotificationBackgroundService background task is doing background work.");
+                    Session = scope.ServiceProvider.GetRequiredService<IModSession>();
+                    Repository = scope.ServiceProvider.GetRequiredService<INotificationRepository>();
+                    TemplateRepository = scope.ServiceProvider.GetRequiredService<INotificationTemplateRepository>();
 
-                    ProcessNotifications();
+                    Logger.LogInformation("NotificationBackgroundService is starting.");
+
+                    RegisterScopedServices(scope);
+
+                    Logger.LogInformation("NotificationBackgroundService background task is doing background work.");
+
+                    await ProcessNotifications();
 
                     await Task.Delay(TimeSpan.FromMilliseconds(Options.PollingFrequency), stoppingToken);
                 }
-
-                Logger.LogDebug("NotificationBackgroundService background task is stopping.");
             }
+
+            Logger.LogWarning("NotificationBackgroundService background task is stopping.");
         }
 
         protected abstract void RegisterScopedServices(IServiceScope scope);
 
-        public void ProcessNotifications()
+        public async Task ProcessNotifications()
         {
+            // Set the CurrentPrincipal = System
+            // System Principal has a upn of "system" and is in all roles so should be able to do the work necessary to generate notifications or perform other background jobs for your app.
+            var systemPrincipal = new SystemModPrincipal();
+            Thread.CurrentPrincipal = systemPrincipal;
+
             GenerateNotifications();
             SendNotifications();
+
+            await Task.CompletedTask;
         }
 
         private void GenerateNotifications()
         {
             // get all templates that are enabled and not real time
             //var templates = NotificationTemplate.GetAll().Where(x => x.Enabled == true && x.Frequency != "Real Time").ToList();
-            var templates = this.TemplateRepository.GetAll().Where(x => x.IsEnabled && x.Frequency != (int)NotificationFrequency.REAL_TIME);
+            var templates = this.TemplateRepository.GetAll().Where(x => x.IsEnabled && x.Frequency != (int)NotificationFrequency.REAL_TIME && (x.NextRunTime ?? DateTime.UtcNow.AddMilliseconds(-500)) <= DateTime.UtcNow);
 
             foreach (NotificationTemplate template in templates)
             {
-                // Check for next run date, if null, set to now(ish)
-                if ((template.NextRunTime ?? DateTime.Now.AddMilliseconds(-500)) <= DateTime.Now)
-                    GenerateNotificationsForTemplate(template);
+                if (CheckNextRunDate(template)) 
+                { 
+                   GenerateNotificationsForTemplate(template);
+                }
             }
+        }
+
+        private bool CheckNextRunDate(NotificationTemplate template)
+        {
+            var success = false;
+
+            try
+            {
+                // Check for next run date, if null, set to now(ish)
+                template.NextRunTime = template.NextRunTime ?? DateTime.UtcNow.AddMilliseconds(-500);
+
+                if (template.NextRunTime <= DateTime.UtcNow)
+                {
+                    // Update Next Run Date
+                    while (template.NextRunTime < DateTime.UtcNow)
+                        template.NextRunTime = GetNextRunDate((DateTime)template.NextRunTime, template.Frequency);
+
+                    TemplateRepository.Save(template);
+
+                    success = true;
+                }
+            }
+            catch (ModDbConcurrencyException ex)
+            {
+                Logger.LogInformation(ex.Message);
+            }
+
+            return success;
         }
 
         private void GenerateNotificationsForTemplate(NotificationTemplate template)
         {
-            var status = "Success";
-
             try
             {
                 GenerateNotificationForTemplate(template);
             }
             catch (Exception ex)
             {
-                status = "Error: " + ex.Message;
+                Logger.LogError(ex, "Error generating notifications for template " + template.Name);
             }
             finally
             {
-                // This may seem a little weird, why not just add frequency to DateTime.Now?
-                // Well, eventually that would get skewed if this process takes any time to run.  We want the time of day to be consistent.
-                // So if Next Run Date is set to Midnight, it will always be at midnight.
-                // The loop is basically just here in case it gets stuck or set back way in the past.  
-                // The loop ensures that the next run date that is set will be in the future.
-
-                // Update Next Run Date
-                while (template.NextRunTime < DateTime.Now)
-                    template.NextRunTime = GetNextRunDate((DateTime)template.NextRunTime, template.Frequency);
-
-                template.LastRunTime = DateTime.Now;
-                //template.LastRunStatus = status;
+                template.LastRunTime = DateTime.UtcNow;
 
                 TemplateRepository.Save(template);
             }
@@ -131,6 +161,9 @@ namespace Mod.Framework.Notifications.Hosting
                     break;
                 case (int)NotificationFrequency.MONTHLY:
                     nextRunDate = nextRunDate.AddMonths(1);
+                    break;
+                case (int)NotificationFrequency.HOURLY:
+                    nextRunDate = nextRunDate.AddHours(1);
                     break;
             }
 
@@ -152,34 +185,59 @@ namespace Mod.Framework.Notifications.Hosting
 
         private void SendNotifications()
         {
-             var notifications = Repository.GetAll(x => x.NotificationStatuses.OrderByDescending(x => x.CreatedTime).First().Status == (int)NotificationStatuses.PENDING);
+            var notifications = Repository.GetAll(x => x.NotificationStatuses.OrderByDescending(x => x.CreatedTime).First().Status == NotificationStatuses.PENDING.ToString());
 
-            foreach (Notification notification in notifications)
+            foreach (var notification in notifications)
             {
+                var processingNotification = false;
+
                 try
                 {
-                    SendNotification(notification);
+                    processingNotification = MarkAsInProcess(notification);
+                    if (processingNotification)
+                    {
+                        SendNotification(notification);
 
-                    notification.UpdateCurrentStatus((int)NotificationStatuses.SENT);
-                    notification.SentDateTime = DateTime.Now;
+                        notification.UpdateCurrentStatus(NotificationStatuses.SENT.ToString());
+                        notification.SentDateTime = DateTime.UtcNow;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    notification.UpdateCurrentStatus((int)NotificationStatuses.ERROR, ex.Message);
+                    notification.UpdateCurrentStatus(NotificationStatuses.ERROR.ToString(), ex.Message);
                     notification.SentDateTime = null;
                 }
                 finally
                 {
-                    Repository.Save(notification);
+                    if (processingNotification)
+                        Repository.Save(notification);
                 }
             }
         }
 
+        private bool MarkAsInProcess(Notification notification)
+        {
+            var success = false;
+
+            try
+            {
+                notification.UpdateCurrentStatus(NotificationStatuses.IN_PROCESS.ToString());
+                Repository.Save(notification);
+                success = true;
+            }
+            catch (ModDbConcurrencyException ex)
+            {
+                Logger.LogInformation(ex.Message);
+            }
+
+            return success;
+        }
+
         protected virtual void SendNotification(Notification notification)
         {
-            var client = new SmtpClient("<smtp client>");
+            var client = new SmtpClient("mail.omb.gov");
 
-            var from = new MailAddress("<from address>", FromEmailDisplayName, Encoding.UTF8);
+            var from = new MailAddress("notification@omb.gov", FromEmailDisplayName, Encoding.UTF8);
 
             using (var message = new MailMessage())
             {
@@ -188,7 +246,7 @@ namespace Mod.Framework.Notifications.Hosting
                 foreach (string to in notification.Recipient.Split(','))
                     message.To.Add(new MailAddress(to));
 
-                message.ReplyToList.Add(new MailAddress("<DONOTREPLY address>"));
+                message.ReplyToList.Add(new MailAddress("DONOTREPLY@omb.gov"));
                 message.IsBodyHtml = true;
 
                 message.Body = notification.Body;
@@ -217,18 +275,20 @@ namespace Mod.Framework.Notifications.Hosting
 
             if (e.Cancelled)
             {
-                notification.UpdateCurrentStatus((int)NotificationStatuses.PENDING);
+                notification.UpdateCurrentStatus(NotificationStatuses.PENDING.ToString());
                 notification.SentDateTime = null;
+                Logger.LogWarning("Email Notification Canceled for message '" + notification.Subject + "' to " + notification.Recipient);
             }
             if (e.Error != null)
             {
-                notification.UpdateCurrentStatus((int)NotificationStatuses.ERROR, e.Error.Message);
+                notification.UpdateCurrentStatus(NotificationStatuses.ERROR.ToString(), e.Error.Message);
                 notification.SentDateTime = null;
+                Logger.LogError("Email Notification Error for message '" + notification.Subject + "' to " + notification.Recipient + ". The reason given is: '" + e.Error.Message);
             }
             else
             {
-                notification.UpdateCurrentStatus((int)NotificationStatuses.SENT);
-                notification.SentDateTime = DateTime.Now;
+                notification.UpdateCurrentStatus(NotificationStatuses.SENT.ToString());
+                notification.SentDateTime = DateTime.UtcNow;
             }
 
             Repository.Save(notification);

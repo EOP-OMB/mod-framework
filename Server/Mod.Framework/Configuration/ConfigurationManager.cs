@@ -9,7 +9,7 @@ namespace Mod.Framework.Configuration
     {
         static ConfigurationManager()
         {
-            var inContainerVar = Environment.GetEnvironmentVariable(Constants.DOTNET_RUNNING_IN_CONTAINER);
+            var inContainerVar = Environment.Variable(Constants.DOTNET_RUNNING_IN_CONTAINER);
 
             RunningInContainer = (string.IsNullOrEmpty(inContainerVar) ? false : (inContainerVar.ToString().ToLower() == "true" || inContainerVar.ToString() == "1"));
             Settings = new Settings();

@@ -1,5 +1,4 @@
 <div *ngIf="user">
-    Welcome 
     <span style="padding-right: 5px;">{{ user.displayName }}</span>
     <ng-container *ngIf="showUser;else showMenu">
         <button mat-icon-button [matMenuTriggerFor]="menu" class="mod-user-icon" aria-label="User Menu">

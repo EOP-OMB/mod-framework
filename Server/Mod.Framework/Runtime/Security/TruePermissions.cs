@@ -1,11 +1,12 @@
-﻿using Mod.Framework.Runtime.Security;
+﻿using Mod.Framework.Domain.Entities;
+using Mod.Framework.Runtime.Security;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Mod.Framework.Runtime.Security
 {
-    public class TruePermissions<TEntity> : Permissions<TEntity>
+    public class TruePermissions<TEntity> : Permissions<TEntity> 
     {
         public static TruePermissions<TEntity> Instance { get; } = new TruePermissions<TEntity>();
 

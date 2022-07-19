@@ -29,11 +29,11 @@ namespace Mod.Framework.WebApi.Controllers
             }
             return new List<object>(User.Claims.Select(x => new
             {
-                Type = x.Type,
-                Value = x.Value,
-                Issuer = x.Issuer,
-                OriginalIssuer = x.OriginalIssuer,
-                ValueType = x.ValueType
+                x.Type,
+                x.Value,
+                x.Issuer,
+                x.OriginalIssuer,
+                x.ValueType
             }).ToList());
         }
 
@@ -43,9 +43,9 @@ namespace Mod.Framework.WebApi.Controllers
             return JsonConvert.SerializeObject(User as ModPrincipal);
         }
 
-        // Only allow specified group members to access this endpoint
+        // Only allow OMB_ALL group members to access this endpoint
         [Route("restricted")]
-        [Authorize(Roles = "AllowedGroup")]
+        [Authorize(Roles = "OMB_ALL")]
         public ActionResult<string> GetRestricted()
         {
             return JsonConvert.SerializeObject(User as ModPrincipal);
