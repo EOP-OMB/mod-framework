@@ -22,6 +22,9 @@ namespace Mod.Framework.Notifications.Domain.Entities
 
         public virtual NotificationTemplate NotificationTemplate { get; set; }
         public virtual ICollection<NotificationStatus> NotificationStatuses { get; set; }
+        public virtual ICollection<NotificationAttachment> NotificationAttachments { get; set; }
+
+
         [Timestamp]
         public byte[] ConcurrencyToken { get; set; }
 

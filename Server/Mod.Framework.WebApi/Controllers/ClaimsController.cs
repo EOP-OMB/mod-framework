@@ -15,12 +15,14 @@ using Newtonsoft.Json;
 
 namespace Mod.Framework.WebApi.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class ClaimsController : ControllerBase
     {
-        [Route("")]
+        [HttpGet]
+        [Route("GetClaims")]
         public ActionResult<List<object>> GetClaims()
         {
             if (!User.Identity.IsAuthenticated)
@@ -37,13 +39,16 @@ namespace Mod.Framework.WebApi.Controllers
             }).ToList());
         }
 
+        [HttpGet]
         [Route("user")]
         public ActionResult<string> GetUser()
         {
             return JsonConvert.SerializeObject(User as ModPrincipal);
         }
 
+        [HttpGet]
         // Only allow OMB_ALL group members to access this endpoint
+        [HttpGet]
         [Route("restricted")]
         [Authorize(Roles = "OMB_ALL")]
         public ActionResult<string> GetRestricted()
@@ -51,8 +56,9 @@ namespace Mod.Framework.WebApi.Controllers
             return JsonConvert.SerializeObject(User as ModPrincipal);
         }
 
+        [HttpGet]
         [Route("signout")]
-        public IActionResult SignOut()
+        public new IActionResult SignOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.SignOutAsync(WsFederationDefaults.AuthenticationScheme, new AuthenticationProperties());

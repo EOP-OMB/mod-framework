@@ -26,7 +26,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 
 // Components
 import { ModLayoutComponent } from './components/mod-layout/mod-layout.component';
@@ -39,6 +39,7 @@ import { ModUserDisplayComponent } from './components/mod-user-display/mod-user-
 import { BrowserCheckComponent } from './components/browser-check/browser-check.component';
 import { HttpRequestInterceptor } from './services/http-request.interceptor';
 import { RoleGuardService } from './services/role-guard.service';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 export function initiateSingleSignOn(userService: CurrentUserService) {
@@ -74,6 +75,8 @@ export function initiateSingleSignOn(userService: CurrentUserService) {
     ],
     imports: [
         CommonModule,
+        BrowserModule,
+        NgIf,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,

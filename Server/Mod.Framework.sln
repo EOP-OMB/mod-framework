@@ -38,7 +38,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.User", "Mod.F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.Notifications", "Mod.Framework.Notifications\Mod.Framework.Notifications.csproj", "{EE5A99D2-655A-40AB-943B-0A8E46F21817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mod.Framework.Attachments", "Mod.Framework.Attachments\Mod.Framework.Attachments.csproj", "{DD56892D-8DDA-4309-AB23-EEECADB89F0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.Attachments", "Mod.Framework.Attachments\Mod.Framework.Attachments.csproj", "{DD56892D-8DDA-4309-AB23-EEECADB89F0C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mod.Framework.DistributedAppSupport", "Mod.Framework.DistributedAppSupport\Mod.Framework.DistributedAppSupport.csproj", "{245E4CE1-9914-41DD-B5CD-AE7C4EB870D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +82,10 @@ Global
 		{DD56892D-8DDA-4309-AB23-EEECADB89F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD56892D-8DDA-4309-AB23-EEECADB89F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD56892D-8DDA-4309-AB23-EEECADB89F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{245E4CE1-9914-41DD-B5CD-AE7C4EB870D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245E4CE1-9914-41DD-B5CD-AE7C4EB870D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245E4CE1-9914-41DD-B5CD-AE7C4EB870D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245E4CE1-9914-41DD-B5CD-AE7C4EB870D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,6 +15,8 @@ namespace Mod.Framework.Notifications.Extensions
 
             options.Invoke(opt);
 
+            services.AddAutoMapper(typeof(ModNotificationExtensions).Assembly);
+
             services.AddSingleton<IOptions<ModNotificationOptions>>(Options.Create(opt));
 
             services.AddTransient<INotificationDomService, NotificationDomService>();

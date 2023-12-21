@@ -75,7 +75,7 @@ namespace Mod.Framework.WebApi.Extensions
 
             app.UseForwardedHeaders(forwardingOptions);
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

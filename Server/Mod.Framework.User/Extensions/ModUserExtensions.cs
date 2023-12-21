@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Mod.Framework.Configuration;
 using Mod.Framework.User.Interfaces;
@@ -14,7 +15,8 @@ namespace Mod.Framework.User.Extensions
             services.AddDbContext<UserContext>(options =>
             {
                 options
-                      .UseSqlServer(ConfigurationManager.Secrets["MOD_User_ConnectionString"])
+                      .UseSqlServer(ConfigurationManager.Secrets["MOD_User_ConnectionString"], o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+                      .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
                       .EnableDetailedErrors();
             });
 

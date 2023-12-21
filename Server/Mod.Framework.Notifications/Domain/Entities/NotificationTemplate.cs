@@ -19,6 +19,8 @@ namespace Mod.Framework.Notifications.Domain.Entities
         public bool IsEnabled { get; set; }
         public bool IsAnnouncement { get; set; }
         public bool IncludeCc { get; set; }
+        public string Cc { get; set; }
         public byte[] ConcurrencyToken { get; set; }
+        public string Application { get; set; }
     }
 }

@@ -15,6 +15,7 @@ using Mod.Framework.Runtime.Session;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -58,11 +59,7 @@ namespace Mod.Framework.Notifications.Hosting
                     Repository = scope.ServiceProvider.GetRequiredService<INotificationRepository>();
                     TemplateRepository = scope.ServiceProvider.GetRequiredService<INotificationTemplateRepository>();
 
-                    Logger.LogInformation("NotificationBackgroundService is starting.");
-
                     RegisterScopedServices(scope);
-
-                    Logger.LogInformation("NotificationBackgroundService background task is doing background work.");
 
                     await ProcessNotifications();
 
@@ -82,9 +79,16 @@ namespace Mod.Framework.Notifications.Hosting
             var systemPrincipal = new SystemModPrincipal();
             Thread.CurrentPrincipal = systemPrincipal;
 
-            GenerateNotifications();
-            SendNotifications();
-
+            try
+            {
+                GenerateNotifications();
+                SendNotifications();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.Message);
+            }
+            
             await Task.CompletedTask;
         }
 
@@ -96,9 +100,9 @@ namespace Mod.Framework.Notifications.Hosting
 
             foreach (NotificationTemplate template in templates)
             {
-                if (CheckNextRunDate(template)) 
-                { 
-                   GenerateNotificationsForTemplate(template);
+                if (CheckNextRunDate(template))
+                {
+                    GenerateNotificationsForTemplate(template);
                 }
             }
         }
@@ -185,7 +189,11 @@ namespace Mod.Framework.Notifications.Hosting
 
         private void SendNotifications()
         {
-            var notifications = Repository.GetAll(x => x.NotificationStatuses.OrderByDescending(x => x.CreatedTime).First().Status == NotificationStatuses.PENDING.ToString());
+            //include attachemnts
+            var notifications = Repository
+                .GetAllIncluding(a => a.NotificationAttachments, b => b.NotificationStatuses)
+                .Where(x => x.NotificationStatuses.OrderByDescending(x => x.CreatedTime)
+                .First().Status == NotificationStatuses.PENDING.ToString());
 
             foreach (var notification in notifications)
             {
@@ -235,7 +243,18 @@ namespace Mod.Framework.Notifications.Hosting
 
         protected virtual void SendNotification(Notification notification)
         {
-            var client = new SmtpClient("mail.omb.gov");
+            var client = new SmtpClient();
+
+            // if the env finds the smtp client, use it, otherwise use the default "mail.omb.gov"
+            // NOTE: mail.omb.gov will fail if sent from anywhere but PROD. To Send mail in Dev/Test/Stage, use devmail.omb.gov in the ENV variable.
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("MOD_SmtpClient")))
+            {
+                client.Host = Environment.GetEnvironmentVariable("MOD_SmtpClient");
+            }
+            else
+            {
+                client.Host = "mail.omb.gov";
+            }
 
             var from = new MailAddress("notification@omb.gov", FromEmailDisplayName, Encoding.UTF8);
 
@@ -260,9 +279,27 @@ namespace Mod.Framework.Notifications.Hosting
                 message.Subject = notification.Subject;
                 message.SubjectEncoding = Encoding.UTF8;
 
-                // Trying to call Asyncronously causes the DbContext to whack out when updating the record.  Needs more research.
-                //client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
-                //client.SendAsync(message, notification.Id);
+                ////attach the ONE attachment if it exists
+                //if (notification.NotificationAttachments != null && notification.NotificationAttachments.Any())
+                //{
+                //    byte[] attachmentBytes = notification.NotificationAttachments.First().Data;
+                //    MemoryStream msAttachment = new MemoryStream(attachmentBytes);
+                //    var attachment = new Attachment(msAttachment, notification.NotificationAttachments.First().FileName);
+                //    message.Attachments.Add(attachment);
+                //}
+
+                //multiple
+                if (notification.NotificationAttachments != null && notification.NotificationAttachments.Any())
+                {
+                    foreach (var attachment in notification.NotificationAttachments)
+                    {
+                        byte[] attachmentBytes = attachment.Data;
+                        MemoryStream msAttachment = new MemoryStream(attachmentBytes);
+                        var newAttachment = new Attachment(msAttachment, attachment.FileName);
+                        message.Attachments.Add(newAttachment);
+                    }
+                }
+
                 client.Send(message);
             }
         }

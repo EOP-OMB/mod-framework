@@ -1,5 +1,5 @@
 <div *ngIf="user">
-    <span style="padding-right: 5px;">{{ user.displayName }}</span>
+    <span style="padding-right: 5px; margin-top: -5px;">{{ user.displayName }}</span>
     <ng-container *ngIf="showUser;else showMenu">
         <button mat-icon-button [matMenuTriggerFor]="menu" class="mod-user-icon" aria-label="User Menu">
             <mat-icon>account_circle</mat-icon>

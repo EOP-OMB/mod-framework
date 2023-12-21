@@ -92,7 +92,7 @@ namespace Mod.Framework.DistributedAppSupport.Extensions
                 {
                     options.TimeoutMinutes = idleTimeoutMinutes;
                 })
-                .AddSingleton<IPostConfigureOptions<CookieAuthenticationOptions>, PostConfigureCookieAuthenticationOptions>();
+                .AddSingleton<IPostConfigureOptions<CookieAuthenticationOptions>, Options.PostConfigureCookieAuthenticationOptions>();
         }
     }
 }

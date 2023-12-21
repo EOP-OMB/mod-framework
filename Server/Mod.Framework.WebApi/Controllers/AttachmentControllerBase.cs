@@ -31,7 +31,7 @@ namespace Mod.Framework.WebApi.Controllers
         }
 
         [HttpPost()]
-        public virtual ActionResult Upload(List<IFormFile> files, [FromForm] string attachedToGuid, [FromForm] string uid, [FromForm] int foreignKey)
+        public virtual ActionResult Upload(List<IFormFile> files, [FromForm] string attachedToGuid, [FromForm] string uid, [FromForm] int foreignKey, [FromForm] string type)
         {
             if (files != null)
             {
@@ -47,7 +47,8 @@ namespace Mod.Framework.WebApi.Controllers
                         ContentType = files[0].ContentType,
                         Size = files[0].Length,
                         Uid = new System.Guid(uid),
-                        ForeignKey = foreignKey == 0 ? null : (int?)foreignKey
+                        ForeignKey = foreignKey == 0 ? null : (int?)foreignKey,
+                        Type = type
                     };
 
                     using (MemoryStream target = new MemoryStream())

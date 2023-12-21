@@ -44,7 +44,7 @@ namespace Mod.Framework.Application
 
             if (!e.Cancel)
             {
-                Repository.Insert(e.Entity);
+                e.Entity = Repository.Insert(e.Entity);
 
                 e.Dto = PostMap(MapToDto(e.Entity));
 
@@ -66,6 +66,9 @@ namespace Mod.Framework.Application
         {
             Delete(dto.Id);
         }
+        protected virtual void OnDeleted(TPrimaryKey id)
+        {
+        }
 
         public virtual void Delete(TPrimaryKey id)
         {
@@ -73,6 +76,8 @@ namespace Mod.Framework.Application
                 throw new SecurityException("Access denied.  Cannot delete object of type " + typeof(TEntity).Name);
 
             Repository.Delete(id);
+
+            OnDeleted(id);
         }
 
         public virtual TDto Get(TPrimaryKey id)

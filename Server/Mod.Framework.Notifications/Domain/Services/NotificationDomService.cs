@@ -16,7 +16,9 @@ namespace Mod.Framework.Notifications.Domain.Services
         private readonly IApplicationRoles ApplicationRoles;
         private readonly IEmployeeRepository EmployeeRepository;
 
-        public NotificationDomService(INotificationTemplateRepository templateRepository, INotificationRepository repository, IApplicationRoles appRoles, IEmployeeRepository employeeRepository, ILogger<NotificationDomService> logger)
+        public NotificationDomService(INotificationTemplateRepository templateRepository, INotificationRepository repository, 
+            IApplicationRoles appRoles, IEmployeeRepository employeeRepository,
+            ILogger<NotificationDomService> logger)
         {
             this.TemplateRepository = templateRepository;
             this.Repository = repository;
@@ -24,31 +26,31 @@ namespace Mod.Framework.Notifications.Domain.Services
             this.EmployeeRepository = employeeRepository;
         }
 
-        public Notification CreateNotification(int notificationType, string recipient, Dictionary<string, string> dictionary)
+        public Notification CreateNotification(int notificationType, string recipient, Dictionary<string, string> dictionary, string cc)
         {
             var template = TemplateRepository.Single(x => x.Type == notificationType);
 
-            return CreateNotification(template, recipient, dictionary);
+            return CreateNotification(template, recipient, dictionary, cc);
         }
 
-        public Notification CreateNotification(NotificationTemplate template, string recipient, Dictionary<string, string> dictionary)
+        public Notification CreateNotification(NotificationTemplate template, string recipient, Dictionary<string, string> dictionary, string cc)
         {
             var body = Replace(template.Body, dictionary);
 
-            return CreateNotification(template, recipient, dictionary, body);
+            return CreateNotification(template, recipient, dictionary, body, cc);
         }
 
-        public Notification CreateNotification(int notificationType, string recipient, Dictionary<string, string> dictionary, string body)
+        public Notification CreateNotification(int notificationType, string recipient, Dictionary<string, string> dictionary, string body, string cc)
         {
             var template = TemplateRepository.Single(x => x.Type == notificationType);
 
             if (string.IsNullOrEmpty(body)) 
                 body = Replace(template.Body, dictionary);
 
-            return CreateNotification(template, recipient, dictionary, body);
+            return CreateNotification(template, recipient, dictionary, body, cc);
         }
 
-        public Notification CreateNotification(NotificationTemplate template, string recipient, Dictionary<string, string> dictionary, string body)
+        public Notification CreateNotification(NotificationTemplate template, string recipient, Dictionary<string, string> dictionary, string body, string cc)
         {
             var notification = new Notification();
 
@@ -86,9 +88,26 @@ namespace Mod.Framework.Notifications.Domain.Services
             }
 
             notification.Recipient = notification.Recipient.TrimEnd(',');
-            
-            if (template.IncludeCc)
-                notification.Cc = dictionary.TryGetValue("Cc", out string value) ? value : "";
+
+            var notificationCc = "";
+
+            if ((template.Cc ?? "") != "" || template.IncludeCc)
+            {
+                notificationCc = dictionary.TryGetValue("Cc", out string value) ? value : (template.Cc ?? "");
+            }
+
+            if (!string.IsNullOrEmpty(cc))
+            {
+                if (!string.IsNullOrEmpty(notificationCc))
+                    notificationCc += ", ";
+
+                notificationCc += cc;
+            }
+
+            if (!string.IsNullOrEmpty(notificationCc))
+            {
+                notification.Cc = notificationCc;
+            }
 
             return notification;
         }

@@ -5,7 +5,6 @@ namespace Mod.Framework.HttpClientCalls
 {
     public static class HttpWebResponseExtensions
     {
-
         /// <summary>
         /// Return the response payload of an HTTP response as a byte array
         /// </summary>
@@ -46,3 +45,6 @@ namespace Mod.Framework.HttpClientCalls
         }
     }
 }
+
+
+

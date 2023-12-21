@@ -16,11 +16,13 @@ using Newtonsoft.Json;
 
 namespace Mod.Framework.WebApi.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
     public class LoginController : ControllerBase
     {
+        [HttpGet]   
         [Route("")]
         public async Task Login(string returnUrl)
         {

@@ -58,7 +58,7 @@ h2 {
     text-overflow: clip;
 }
 
-.mat-subheader {
+.mat-mdc-subheader {
     font-size: 14px;
     line-height: 20px;
     max-height: 56px;
@@ -67,51 +67,49 @@ h2 {
     padding: 12px 12px 12px 20px !important;
     margin-bottom: 0px !important;
     margin-top: 0px !important;
-    border-left: $inactive-border;
-    margin-left: -5px;
 }
 
-.mat-subheader .mat-icon {
+.mat-mdc-subheader .mat-icon {
     padding-left: 4px;
     margin-right: 16px;
 }
 
-.mat-expansion-panel {
+.mat-mdc-expansion-panel {
     box-shadow: none;
     margin: 0;
 }
 
-.mat-expansion-indicator {
+.mat-mdc-expansion-indicator {
     line-height: 0 !important;
 }
 
-mat-expansion-panel-header[aria-disabled=true] {
+mat-mdc-expansion-panel-header[aria-disabled=true] {
     color: initial;
 }
 
-.mat-expansion-panel-header {
+.mat-mdc-expansion-panel-header {
     height: 56px !important;
     max-height: 56px !important;
     border-left: $inactive-border;
 }
 
-.mat-expansion-panel-header-title {
+.mat-mdc-expansion-panel-header-title {
     max-height: 24px;
 }
 
-.mat-expansion-panel.active > .mat-expansion-panel-header {
+.mat-mdc-expansion-panel.active > .mat-mdc-expansion-panel-header {
     border-color: $active-border-color;
 }
 
-.mat-expansion-panel-header-title > .mat-icon {
+.mat-mdc-expansion-panel-header-title > .mat-icon {
     margin-right: 16px;
 }
 
-.mat-expansion-panel.mat-expanded {
+.mat-mdc-expansion-panel.mat-mdc-expanded {
     background-color: #eee;
 }
 
-::ng-deep .mat-expansion-panel-body {
+::ng-deep .mat-mdc-expansion-panel-body {
     padding: 0px 0px 0px 0px !important;
 }
 
@@ -120,13 +118,16 @@ mat-expansion-panel-header[aria-disabled=true] {
     align-items: stretch;
 }
 
-
-.mat-list-icon {
-    padding-right: 16px !important;
-    font-size: 22px !important;
+::ng-deep .mat-drawer-inner-container {
+    overflow-x: hidden !important;
 }
 
-.mat-list-item {
+.mdc-list-item--with-leading-icon .mdc-list-item__start {
+    margin-right: 16px !important;
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.mat-mdc-list-item {
     font-size: 15px !important;
     border-left: $inactive-border;
     margin-left: -5px;
@@ -136,19 +137,19 @@ mat-expansion-panel-header[aria-disabled=true] {
     width: auto !important;
 }
 
-.mat-list-item:focus {
+.mat-mdc-list-item:focus {
     border: 1px solid $active-border-color;
 }
 
-.mat-list-item-content {
+.mdc-list-item__content {
     padding: 0px 24px !important;
 }
 
-.mat-list-item.active {
+.mat-mdc-list-item.active {
     border-color: $active-border-color;
     background-color: #d1d1d1;
 }
 
-.mat-list-base {
+.mat-mdc-list-base {
     padding-top: 0px;
 }

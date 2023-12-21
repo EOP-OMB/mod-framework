@@ -19,18 +19,6 @@ namespace Mod.Framework.Serilog
         }
 
         /// <summary>
-        /// Register the Serilog service for SQL Service and console logging.
-        /// </summary>
-        public static IServiceCollection AddSerilogServices(this IServiceCollection services, string sqlConnectionString)
-        {
-            return services.AddSerilogServices(
-                new LoggerConfiguration()
-                    .MinimumLevel.Verbose()
-                    .WriteTo.Console()
-                    .WriteTo.MSSqlServer(sqlConnectionString, "Logs"));
-        }
-
-        /// <summary>
         /// Register the Serilog service for console logging only.
         /// </summary>
         public static IServiceCollection AddSerilogServices(this IServiceCollection services)

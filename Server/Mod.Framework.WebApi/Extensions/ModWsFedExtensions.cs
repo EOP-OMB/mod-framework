@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Authentication.WsFederation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens.Saml;
+using Microsoft.IdentityModel.Tokens;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Mod.Framework.WebApi.Extensions
 {
@@ -19,6 +23,8 @@ namespace Mod.Framework.WebApi.Extensions
             })
             .AddWsFederation(options =>
             {
+                options.TokenHandlers.Clear();
+                options.TokenHandlers.Add(new CustomSamlSecurityTokenHandler());
                 options.Wtrealm = "URN:WSFEDAPP"; 
                 options.MetadataAddress = "https://adfs.omb.gov/federationmetadata/2007-06/federationmetadata.xml";
                 options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
@@ -72,6 +78,20 @@ namespace Mod.Framework.WebApi.Extensions
             });
 
             return services;
+        }
+    }
+
+    public class CustomSamlSecurityTokenHandler : SamlSecurityTokenHandler
+    {
+        public override async Task<TokenValidationResult> ValidateTokenAsync(string token, TokenValidationParameters validationParameters)
+        {
+
+            var configuration = await validationParameters.ConfigurationManager.GetBaseConfigurationAsync(CancellationToken.None).ConfigureAwait(false);
+            var issuers = new[] { configuration.Issuer };
+            validationParameters.ValidIssuers = (validationParameters.ValidIssuers == null ? issuers : validationParameters.ValidIssuers.Concat(issuers));
+            validationParameters.IssuerSigningKeys = (validationParameters.IssuerSigningKeys == null ? configuration.SigningKeys : validationParameters.IssuerSigningKeys.Concat(configuration.SigningKeys));
+
+            return await base.ValidateTokenAsync(token, validationParameters);
         }
     }
 }

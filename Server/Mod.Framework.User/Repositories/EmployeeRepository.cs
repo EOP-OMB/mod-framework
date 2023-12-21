@@ -28,7 +28,7 @@ namespace Mod.Framework.User.Repositories
 
         public Employee GetByUpn(string upn)
         {
-            var entity = GetAllQuery().SingleOrDefault(x => x.Upn.ToLower() == upn.ToLower());
+            var entity = GetAllNoFilterQuery().SingleOrDefault(x => x.Upn.ToLower() == upn.ToLower());
 
             return entity;
         }

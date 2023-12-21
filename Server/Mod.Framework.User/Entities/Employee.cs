@@ -49,6 +49,20 @@ namespace Mod.Framework.User.Entities
         public virtual ICollection<Employee> DirectReports { get; set; }
         public virtual ICollection<EmployeeGroup> Groups { get; set; }
 
+        public string PayPlan { get; set; }   // PPS.[PAY PLAN]
+        public string PaySeries { get; set; }  // PPS.Series
+        public string PayGrade { get; set; } // PPS.Grade
+        public string PayStep { get; set; } // PPS.Step
+        public string AppointmentType { get; set; }
+        public string AppointmentType2 { get; set; }
+        public string EducationLevel { get; set; }
+        public DateTime? HireDate { get; set; }
+        public bool Political { get; set; }
+        public int? AnnualSalary { get; set; }
+
+        public string DivisionCode { get; set; } // DCPDS.[DIVISION CODE]
+        public string DivisionCodeName { get; set; }  // DCPDS.DIVISION
+
         public void UpdateAttribute(string key, string value)
         {
             var attr = this.GetAttribute(key);

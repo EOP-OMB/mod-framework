@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mod.Framework.DistributedAppSupport.Options
 {
-    internal class DistributedSQLKeyStoreOptions
+    public class DistributedSqlKeyStoreOptions
     {
+        public string ConnectionString { get; set; }
+        public string ApplicationName { get; set; }
     }
 }

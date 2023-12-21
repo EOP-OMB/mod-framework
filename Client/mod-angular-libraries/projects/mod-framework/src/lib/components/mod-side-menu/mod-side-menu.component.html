@@ -20,7 +20,7 @@
                                routerLinkActive="active"
                                [routerLinkActiveOptions]="{exact: true}"
                                (keyup.enter)="navigateTo(item.route)">
-                    <mat-icon mat-list-icon [matTooltip]="item.text">{{item.icon}}</mat-icon>
+                    <mat-icon matListItemIcon [matTooltip]="item.text">{{item.icon}}</mat-icon>
                     {{ expanded ? item.text : ""}}
                 </mat-list-item>
             </mat-nav-list>

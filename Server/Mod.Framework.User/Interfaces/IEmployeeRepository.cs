@@ -18,5 +18,6 @@ namespace Mod.Framework.User.Interfaces
         List<Employee> GetAllNoFilter(Expression<Func<Employee, bool>> predicate);
         List<Employee> GetAllNoFilterIncluding(Expression<Func<Employee, bool>> predicate, params Expression<Func<Employee, object>>[] propertySelectors);
         Employee GetNoFilter(int id);
+        Employee GetByUpn(string upn);
     }
 }

@@ -37,7 +37,9 @@ namespace Mod.Framework.WebApi.Controllers
             {
                 return new JsonSerializerSettings
                 {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat
                 };
             }
         }

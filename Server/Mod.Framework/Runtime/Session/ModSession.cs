@@ -27,7 +27,7 @@ namespace Mod.Framework.Runtime.Session
                     return null;
                 }
 
-                return userIdClaim;
+                return userIdClaim.ToLower();
             }
         }
 

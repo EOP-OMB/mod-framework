@@ -9,4 +9,5 @@ export class CurrentUser {
     groups: string[];
     roles: string[];
     displayName: string;
+	phoneNumber: string;
 }

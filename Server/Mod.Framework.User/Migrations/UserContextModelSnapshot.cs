@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mod.Framework.User;
 
+#nullable disable
+
 namespace Mod.Framework.User.Migrations
 {
     [DbContext(typeof(UserContext))]
@@ -15,16 +17,18 @@ namespace Mod.Framework.User.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Mod.Framework.User.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .HasColumnType("nvarchar(max)");
@@ -1048,8 +1052,9 @@ namespace Mod.Framework.User.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
@@ -1711,9 +1716,18 @@ namespace Mod.Framework.User.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AnnualSalary")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AppointmentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AppointmentType2")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Company")
                         .HasColumnType("nvarchar(max)");
@@ -1728,22 +1742,34 @@ namespace Mod.Framework.User.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Division")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DivisionCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DivisionCodeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EducationLevel")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ein")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("GivenName")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("HireDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("Inactive")
                         .HasColumnType("bit");
@@ -1758,12 +1784,12 @@ namespace Mod.Framework.User.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MobilePhone")
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<DateTime>("ModifiedTime")
                         .HasColumnType("datetime2");
@@ -1772,12 +1798,27 @@ namespace Mod.Framework.User.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OfficePhone")
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("PayGrade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PayPlan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaySeries")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PayStep")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Political")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("PreferredName")
                         .HasColumnType("nvarchar(max)");
@@ -1786,31 +1827,31 @@ namespace Mod.Framework.User.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SamAccountName")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetAddress")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Upn")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -1825,8 +1866,9 @@ namespace Mod.Framework.User.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Attribute")
                         .HasColumnType("nvarchar(max)");
@@ -1848,8 +1890,9 @@ namespace Mod.Framework.User.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -1868,8 +1911,9 @@ namespace Mod.Framework.User.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .HasColumnType("nvarchar(max)");
@@ -2219,6 +2263,10 @@ namespace Mod.Framework.User.Migrations
                         .WithMany("Children")
                         .HasForeignKey("ParentDepartmentId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("InternalOrg");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Mod.Framework.User.Entities.DepartmentMap", b =>
@@ -2228,6 +2276,8 @@ namespace Mod.Framework.User.Migrations
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("Mod.Framework.User.Entities.Employee", b =>
@@ -2240,6 +2290,10 @@ namespace Mod.Framework.User.Migrations
                         .WithMany("DirectReports")
                         .HasForeignKey("ReportsToEmployeeId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Department");
+
+                    b.Navigation("ReportsTo");
                 });
 
             modelBuilder.Entity("Mod.Framework.User.Entities.EmployeeAttribute", b =>
@@ -2249,6 +2303,8 @@ namespace Mod.Framework.User.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Mod.Framework.User.Entities.EmployeeGroup", b =>
@@ -2258,6 +2314,24 @@ namespace Mod.Framework.User.Migrations
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Mod.Framework.User.Entities.Department", b =>
+                {
+                    b.Navigation("Children");
+
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("Mod.Framework.User.Entities.Employee", b =>
+                {
+                    b.Navigation("DirectReports");
+
+                    b.Navigation("EmployeeAttributes");
+
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

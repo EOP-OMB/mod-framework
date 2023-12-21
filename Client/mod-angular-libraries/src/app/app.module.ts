@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ModFrameworkModule, ModFrameworkConfig, RoleGuardService } from '../../projects/mod-framework/src/public-api';
+import { ModFrameworkModule, ModFrameworkConfig, RoleGuardService } from 'mod-framework';
 import { RouterModule, Routes } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+//import { MatIconModule } from '@angular/material/icon';
 import { HomeViewComponent } from './views/home-view/home-view.component';
 import { LoginComponent } from './components/login/login.component';
 
@@ -18,7 +18,8 @@ const config: ModFrameworkConfig = {
     profileUrl: 'https://portfolio.staging.omb.gov/portfolio',
     showHelp: true,
     showSearch: true,
-    userOptions: ['Settings']
+    userOptions: ['Settings'],
+    urlsToSkip: []
 }
 
 const routes: Routes = [
@@ -43,7 +44,7 @@ const routes: Routes = [
         RouterModule.forRoot(routes),
         BrowserAnimationsModule,
         ModFrameworkModule.forRoot(config),
-        MatIconModule
+        //MatIconModule
     ],
     providers: [
         

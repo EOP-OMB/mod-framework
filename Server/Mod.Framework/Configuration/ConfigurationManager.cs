@@ -18,7 +18,7 @@ namespace Mod.Framework.Configuration
 
         public static bool RunningInContainer { get; private set; }
 
-        public static Settings Settings { get; private set; }
+        public static Settings Settings { get; private set; } 
 
         public static Secrets Secrets { get; private set; }
     }
