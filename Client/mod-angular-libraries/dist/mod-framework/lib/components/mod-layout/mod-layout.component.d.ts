@@ -19,6 +19,6 @@ export declare class ModLayoutComponent implements OnInit {
     onHelpOptionSelect(option: string): void;
     onSearch(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<ModLayoutComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ModLayoutComponent, "mod-layout", never, { "appName": "appName"; "menuConfig": "menuConfig"; }, { "userOptionSelect": "userOptionSelect"; "helpOptionSelect": "helpOptionSelect"; "search": "search"; }, never, ["*"]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModLayoutComponent, "mod-layout", never, { "appName": { "alias": "appName"; "required": false; }; "menuConfig": { "alias": "menuConfig"; "required": false; }; }, { "userOptionSelect": "userOptionSelect"; "helpOptionSelect": "helpOptionSelect"; "search": "search"; }, never, ["*"], false, never>;
 }
 //# sourceMappingURL=mod-layout.component.d.ts.map

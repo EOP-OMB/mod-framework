@@ -7,6 +7,6 @@ export declare class ModLoadingOverlayComponent implements OnInit {
     constructor(loadingService: LoadingService);
     ngOnInit(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<ModLoadingOverlayComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ModLoadingOverlayComponent, "mod-loading-overlay", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModLoadingOverlayComponent, "mod-loading-overlay", never, {}, {}, never, never, false, never>;
 }
 //# sourceMappingURL=mod-loading-overlay.component.d.ts.map

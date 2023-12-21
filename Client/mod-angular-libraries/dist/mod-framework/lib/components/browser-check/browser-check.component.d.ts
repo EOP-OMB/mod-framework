@@ -10,6 +10,6 @@ export declare class BrowserCheckComponent implements OnInit {
     myDomain: string;
     ngOnInit(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<BrowserCheckComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<BrowserCheckComponent, "mod-browser-check", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BrowserCheckComponent, "mod-browser-check", never, {}, {}, never, never, false, never>;
 }
 //# sourceMappingURL=browser-check.component.d.ts.map

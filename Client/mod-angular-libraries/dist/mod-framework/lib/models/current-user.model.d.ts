@@ -9,5 +9,6 @@ export declare class CurrentUser {
     groups: string[];
     roles: string[];
     displayName: string;
+    phoneNumber: string;
 }
 //# sourceMappingURL=current-user.model.d.ts.map

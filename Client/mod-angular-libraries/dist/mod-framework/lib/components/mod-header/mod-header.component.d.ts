@@ -13,6 +13,6 @@ export declare class ModHeaderComponent implements OnInit {
     onUserOptionSelect(option: string): void;
     optionSelected(option: string): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<ModHeaderComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ModHeaderComponent, "mod-header", never, { "appName": "appName"; }, { "menuClick": "menuClick"; "userOptionSelect": "userOptionSelect"; "helpOptionSelect": "helpOptionSelect"; }, never, ["*"]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModHeaderComponent, "mod-header", never, { "appName": { "alias": "appName"; "required": false; }; }, { "menuClick": "menuClick"; "userOptionSelect": "userOptionSelect"; "helpOptionSelect": "helpOptionSelect"; }, never, ["*"], false, never>;
 }
 //# sourceMappingURL=mod-header.component.d.ts.map

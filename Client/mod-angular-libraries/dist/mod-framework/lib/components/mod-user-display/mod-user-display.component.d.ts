@@ -12,6 +12,6 @@ export declare class ModUserDisplayComponent implements OnInit {
     get user(): import("../../models/current-user.model").CurrentUser;
     optionSelected(option: string): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<ModUserDisplayComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ModUserDisplayComponent, "mod-user-display", never, { "showUser": "showUser"; }, { "selectOption": "selectOption"; }, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModUserDisplayComponent, "mod-user-display", never, { "showUser": { "alias": "showUser"; "required": false; }; }, { "selectOption": "selectOption"; }, never, never, false, never>;
 }
 //# sourceMappingURL=mod-user-display.component.d.ts.map

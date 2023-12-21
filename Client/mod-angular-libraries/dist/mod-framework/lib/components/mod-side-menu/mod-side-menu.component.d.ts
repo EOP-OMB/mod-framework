@@ -27,6 +27,6 @@ export declare class ModSideMenuComponent implements OnInit, OnChanges {
     get viewableSections(): ModMenuSection[];
     getViewableMenuItems(section: ModMenuSection): ModMenuItem[];
     static ɵfac: i0.ɵɵFactoryDeclaration<ModSideMenuComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ModSideMenuComponent, "mod-side-menu", never, { "config": "config"; }, {}, never, ["*"]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ModSideMenuComponent, "mod-side-menu", never, { "config": { "alias": "config"; "required": false; }; }, {}, never, ["*"], false, never>;
 }
 //# sourceMappingURL=mod-side-menu.component.d.ts.map
